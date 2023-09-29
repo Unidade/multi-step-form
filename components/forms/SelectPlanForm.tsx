@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react"
-import { motion } from "framer-motion"
+import { motion, LayoutGroup } from "framer-motion"
 import clsx from "clsx"
 
 const radioCardsData = [
@@ -36,7 +36,7 @@ type radioCardData = {
   Icon: React.FC
 }
 
-export function Form() {
+export function SelectPlanForm() {
   const [monthlyOrYearly, setMonthlyOrYearly] = useState<"monthly" | "yearly">("monthly")
   const [selectedPlan, setSelectedPlan] = useState<plans>("arcade")
 
@@ -63,6 +63,7 @@ export function Form() {
             selected={selectedPlan}
             onClick={handleSelectedPlanChange}
             key={radio.id}
+            monthly={monthlyOrYearly === "monthly"}
             {...radio}
           />
         )
@@ -84,7 +85,9 @@ export function Form() {
           id="monthly"
           checked={monthlyOrYearly === "monthly"}
         />
-        <div
+        <motion.div
+          layout
+          layoutRoot
           onClick={handleRecurrenceChange}
           className="data-[isMonthly=false]:justify-end justify-start flex items-center bg-marine-blue w-11  rounded-xl p-[3px]"
           data-isMonthly={monthlyOrYearly === "monthly" ? "true" : "false"}
@@ -94,7 +97,7 @@ export function Form() {
             className="h-4 w-4 rounded-full bg-white"
             layout
           />
-        </div>
+        </motion.div>
         <span
           className={clsx("transition-colors", {
             "text-marine-blue": monthlyOrYearly === "yearly",
@@ -133,10 +136,23 @@ interface RadioCardProps {
   Icon: React.FC
   selected: string
   onClick: (e: plans) => void
+  monthly?: boolean
 }
 type plans = "arcade" | "advanced" | "pro"
 
-function RadioCard({ id, value, label, price, Icon, selected, onClick }: RadioCardProps) {
+function RadioCard({
+  id,
+  value,
+  label,
+  price: basePrice,
+  Icon,
+  selected,
+  onClick,
+  monthly = true,
+}: RadioCardProps) {
+  const price = monthly ? basePrice : (Number(basePrice) * 10).toString()
+  const recurring = monthly ? "mo" : "yr"
+
   return (
     <div>
       <input
@@ -157,7 +173,18 @@ function RadioCard({ id, value, label, price, Icon, selected, onClick }: RadioCa
         <Icon />
         <div>
           <h2 className="font-bold text-lg tracking-tight">{label}</h2>
-          <p className="text-cool-gray">${price}/mo</p>
+          <p className="text-cool-gray">
+            ${price}/{recurring}
+          </p>
+          {!monthly && (
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="text-marine-blue"
+            >
+              2 months free/yr
+            </motion.p>
+          )}
         </div>
       </label>
     </div>
