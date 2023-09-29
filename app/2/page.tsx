@@ -1,4 +1,5 @@
 import clsx from "clsx"
+import { Form } from "./Form"
 
 const NUMBER_OF_STEPS = 4
 
@@ -6,10 +7,10 @@ const steps = Array(NUMBER_OF_STEPS).fill(null)
 
 export default function Home() {
   return (
-    <main className="grid bg-magnolia place-items-baseline  lg:place-content-center">
-      <SidebarMobile className="fixed w-full h-auto" />
-      <div className="px-4 relative">
-        <div className="relative">
+    <main className="grid pb-20 place-items-baseline  lg:place-content-center">
+      <SidebarMobile className="fixed w-full h-auto z-10" />
+      <div className="px-4 relative bg-magnolia ">
+        <div className="relative z-20">
           <div className="flex justify-center flex-col pb-8  t-4 gap-8">
             <ul className="inline-flex gap-4 mx-auto ">
               {steps.map((_, idx) => {
@@ -34,56 +35,13 @@ export default function Home() {
             </ul>
             <div className="bg-white shadow-2xl shadow-light-blue rounded-md px-6 py-8">
               <h1 className="text-xl capitalize text-marine-blue font-bold tracking-tight rounded-lg">
-                personal info
+                Select your plan
               </h1>
               <p className="text-cool-gray text-sm mt-2">
-                Please fill in the information below and your goal for digital saving.
+                You have the option of monthly or yearly billing
               </p>
 
-              <form className="flex flex-col gap-4">
-                <div className="flex flex-col">
-                  <label className="capitalize text-marine-blue" htmlFor="name">
-                    name
-                  </label>
-                  <input
-                    placeholder="e.g Stephen King"
-                    className="w-full pl-4 placeholder:text-cool-gray border rounded-sm border-cool-gray py-2"
-                    type="text"
-                    name="name"
-                    id="name"
-                  />
-                </div>
-                <div className="flex flex-col">
-                  <label className="capitalize text-marine-blue" htmlFor="name">
-                    email Address
-                  </label>
-                  <input
-                    placeholder="e.g Stephen King"
-                    className="w-full pl-4 placeholder:text-cool-gray border rounded-sm border-cool-gray py-2"
-                    type="email"
-                    name="email"
-                    id="email"
-                  />
-                </div>
-                <div className="flex flex-col">
-                  <label className="capitalize text-marine-blue" htmlFor="phone">
-                    Phone Number
-                  </label>
-                  <input
-                    placeholder="e.g Stephen King"
-                    className="w-full pl-4 placeholder:text-cool-gray border rounded-sm border-cool-gray py-2"
-                    type="tel"
-                    name="phone"
-                    id="phone"
-                  />
-                </div>
-                <button
-                  type="submit"
-                  className="absolute bottom-[-50px] right-0 bg-marine-blue px-4 py-2 text-white rounded-md"
-                >
-                  Next Step
-                </button>
-              </form>
+              <Form />
             </div>
           </div>
         </div>

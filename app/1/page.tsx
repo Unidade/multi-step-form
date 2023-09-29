@@ -77,12 +77,14 @@ export default function Home() {
                     id="phone"
                   />
                 </div>
-                <button
-                  type="submit"
-                  className="absolute bottom-[-50px] right-0 bg-marine-blue px-4 py-2 text-white rounded-md"
-                >
-                  Next Step
-                </button>
+                <div className="absolute w-full flex justify-between bottom-[-50px] right-0">
+                  <button
+                    type="submit"
+                    className="bg-marine-blue px-4 py-2 text-white rounded-md ml-auto"
+                  >
+                    Next Step
+                  </button>
+                </div>
               </form>
             </div>
           </div>
