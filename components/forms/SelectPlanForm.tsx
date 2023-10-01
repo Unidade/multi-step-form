@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react"
 import { motion, LayoutGroup } from "framer-motion"
 import clsx from "clsx"
+import { Plan, PlanRecurrence } from "@/types"
 
 const radioCardsData = [
   {
@@ -29,22 +30,22 @@ const radioCardsData = [
 ] satisfies radioCardData[]
 
 type radioCardData = {
-  id: plans
-  value: plans
+  id: Plan
+  value: Plan
   label: string
   price: string
   Icon: React.FC
 }
 
 export function SelectPlanForm() {
-  const [monthlyOrYearly, setMonthlyOrYearly] = useState<"monthly" | "yearly">("monthly")
-  const [selectedPlan, setSelectedPlan] = useState<plans>("arcade")
+  const [monthlyOrYearly, setMonthlyOrYearly] = useState<PlanRecurrence>("monthly")
+  const [selectedPlan, setSelectedPlan] = useState<Plan>("arcade")
 
   const handleRecurrenceChange = () => {
     setMonthlyOrYearly((prev) => (prev === "monthly" ? "yearly" : "monthly"))
   }
 
-  const handleSelectedPlanChange = (plan: plans) => {
+  const handleSelectedPlanChange = (plan: Plan) => {
     setSelectedPlan(plan)
   }
 
@@ -130,15 +131,14 @@ const spring = {
 
 interface RadioCardProps {
   id: string
-  value: plans
+  value: Plan
   label: string
   price: string
   Icon: React.FC
   selected: string
-  onClick: (e: plans) => void
+  onClick: (e: Plan) => void
   monthly?: boolean
 }
-type plans = "arcade" | "advanced" | "pro"
 
 function RadioCard({
   id,

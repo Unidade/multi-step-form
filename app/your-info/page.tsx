@@ -1,4 +1,6 @@
+import { submit } from "@/lib/submit"
 import { FormButtons } from "../FormButtons"
+import { DetailedHTMLProps, InputHTMLAttributes } from "react"
 
 export default function Home() {
   return (
@@ -10,84 +12,61 @@ export default function Home() {
         Please fill in the information below and your goal for digital saving.
       </p>
 
-      <form className="flex flex-col gap-4 mt-4">
+      <form action={submit} className="flex flex-col gap-4 mt-4">
         <div className="flex flex-col">
           <label className="capitalize text-marine-blue" htmlFor="name">
             name
           </label>
-          <input
+          <UserInput
             placeholder="e.g Stephen King"
             className="w-full pl-4 placeholder:text-cool-gray border rounded-sm border-cool-gray py-2"
             type="text"
             name="name"
             id="name"
+            required
           />
         </div>
         <div className="flex flex-col">
           <label className="capitalize text-marine-blue" htmlFor="name">
             email Address
           </label>
-          <input
-            placeholder="e.g Stephen King"
+          <UserInput
+            placeholder="e.g stephenking@lorem.com"
             className="w-full pl-4 placeholder:text-cool-gray border rounded-sm border-cool-gray py-2"
             type="email"
             name="email"
             id="email"
+            required
           />
         </div>
         <div className="flex flex-col">
           <label className="capitalize text-marine-blue" htmlFor="phone">
             Phone Number
           </label>
-          <input
-            placeholder="e.g Stephen King"
+          <UserInput
+            placeholder="e.g +1 234 5676 890"
             className="w-full pl-4 placeholder:text-cool-gray border rounded-sm border-cool-gray py-2"
             type="tel"
             name="phone"
             id="phone"
+            required
+            list="defaultTels"
           />
         </div>
+        <datalist className="bg-white [&>*]:bg-white" id="defaultTels">
+          <option className="bg-white" value="111-1111-1111"></option>
+          <option value="122-2222-2222"></option>
+          <option value="333-3333-3333"></option>
+          <option value="344-4444-4444"></option>
+        </datalist>
         <FormButtons />
       </form>
     </div>
   )
 }
 
-function SidebarMobile({ className }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      xmlns="http://www.w3.org/2000/svg"
-      xlinkHref="http://www.w3.org/1999/xlink"
-      width="375"
-      height="172"
-      viewBox="0 0 375 172"
-    >
-      <defs>
-        <path id="a" d="M0 0h375v172H0z" />
-      </defs>
-      <g fill="none" fillRule="evenodd">
-        <mask id="b" fill="#fff">
-          <use xlinkHref="#a" />
-        </mask>
-        <use xlinkHref="#a" fill="#483EFF" />
-        <g mask="url(#b)">
-          <g transform="translate(-151.029 -133.957)">
-            <path
-              fill="#6259FF"
-              d="M79.546 349.634c54.547 128.646 292.524 204.132 354.626 99.852 62.102-104.28-95.035-123.204-150.583-230.963-55.547-107.759-98.711-175.015-178.973-150.466C24.354 92.607 25 220.987 79.546 349.634Z"
-            />
-            <ellipse cx="129.864" cy="258.711" fill="#FFAF7E" rx="96.329" ry="96.373" />
-            <path
-              fill="#F9818E"
-              d="M464.88 433.146c87.31-40.69 133.585-206.525 60.253-246.82-73.333-40.293-82.587 68.465-155.485 109.343-72.898 40.877-118.192 72.245-99.348 126.973 18.845 54.728 107.27 51.194 194.58 10.504Z"
-            />
-            <g stroke="#FFF" strokeLinecap="round" strokeLinejoin="bevel" strokeWidth="5">
-              <path d="m367.336 243.125 15.263-15.549M430.872 251.016l-17.995-15.112M399.36 271.751l-9.94 21.293" />
-            </g>
-          </g>
-        </g>
-      </g>
-    </svg>
-  )
+function UserInput(
+  props: DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
+) {
+  return <input {...props} name={`user-${props.name}`} />
 }

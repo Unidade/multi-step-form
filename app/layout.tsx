@@ -28,7 +28,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className={`${UbuntuRegular.variable} relative`}>
       <body>
         <SidebarMobile className="fixed z-10" />
-
         <div className="flex flex-col gap-8">
           <header className="relative mt-4 flex justify-center z-10">
             <StepIndicator />

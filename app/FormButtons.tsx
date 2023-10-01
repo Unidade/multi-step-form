@@ -1,34 +1,19 @@
 "use client"
-
 import { twMerge } from "tailwind-merge"
 import { usePathname } from "next/navigation"
 import { validStepType, validSteps } from "./StepIndicator"
 import Link from "next/link"
 
-function getNextStepHref(currentStep: validStepType) {
-  const currentStepIndex = validSteps.indexOf(currentStep)
-  const nextStep = validSteps[currentStepIndex + 1]
-  if (!nextStep) throw new Error("No next step")
-  return `/${nextStep}`
-}
-
-function getBackHref(currentStep: validStepType) {
-  const currentStepIndex = validSteps.indexOf(currentStep)
-  const backStep = validSteps[currentStepIndex - 1]
-  if (!backStep) throw new Error("No back step")
-  return `/${backStep}`
-}
-
-export function FormButtons({
-  isBackButtonVisible = false,
-}: {
-  isBackButtonVisible?: boolean
-}) {
+export function FormButtons() {
   const pathname = usePathname()
-
   const currentStep = pathname.replace("/", "") as validStepType
-  const nextStepPath = getNextStepHref(currentStep)
-  const backStepPath = getBackHref(currentStep)
+
+  const currentStepIndex = validSteps.indexOf(currentStep)
+
+  const isBackButtonVisible = currentStepIndex > 0
+  const isNextButtonVisible = currentStepIndex < validSteps.length - 1
+
+  const backStepPath = isBackButtonVisible ? `/${validSteps[currentStepIndex - 1]}` : null
 
   return (
     <div
@@ -38,16 +23,22 @@ export function FormButtons({
       )}
     >
       {isBackButtonVisible && (
+        <Link
+          className="px-4 py-2 transition-all hover:text-marine-blue text-cool-gray rounded-md"
+          href={backStepPath as string}
+        >
+          Go Back
+        </Link>
+      )}
+      {isNextButtonVisible && (
         <button
           type="submit"
-          className="px-4 py-2 transition-all hover:text-marine-blue text-cool-gray rounded-md"
+          className="bg-marine-blue px-4 py-2 text-white rounded-md"
+          disabled={!isNextButtonVisible}
         >
-          <Link href={backStepPath}>Go Back</Link>
+          Next Step
         </button>
       )}
-      <button type="submit" className="bg-marine-blue px-4 py-2 text-white rounded-md">
-        <Link href={nextStepPath}>Next Step</Link>
-      </button>
     </div>
   )
 }
