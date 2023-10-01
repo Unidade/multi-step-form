@@ -20,10 +20,7 @@ export function AddOnForm() {
               name={name}
               id={name}
             />
-            <label
-              className="flex justify-between  text-sm  w-full items-center"
-              htmlFor={name}
-            >
+            <label className="flex justify-between   w-full items-center" htmlFor={name}>
               <div className="flex gap-4  items-center">
                 <div className="flex flex-col">
                   <h2 className=" text-marine-blue font-bold tracking-tight">

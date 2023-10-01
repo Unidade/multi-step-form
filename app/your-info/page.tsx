@@ -6,7 +6,7 @@ import { twMerge } from "tailwind-merge"
 
 export default function Home() {
   return (
-    <div>
+    <div className="flex-1">
       <PageTitle className="text-xl capitalize text-marine-blue font-bold tracking-tight rounded-lg">
         personal info
       </PageTitle>

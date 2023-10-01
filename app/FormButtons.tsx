@@ -18,7 +18,7 @@ export function FormButtons() {
   return (
     <div
       className={twMerge(
-        "absolute w-full flex justify-between bottom-[-50px] right-0",
+        "absolute w-full flex justify-between bottom-[-50px] right-0 md:static md:pt-4 ",
         !isBackButtonVisible && "justify-end"
       )}
     >
