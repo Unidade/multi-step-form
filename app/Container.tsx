@@ -2,7 +2,7 @@ import { SideBarDesktop } from "./SideBarDesktop"
 
 export function Container({ children }: { children: React.ReactNode }) {
   return (
-    <main className="grid bg-magnolia mt-8 pb-4 md:pb-0 md:mt-0 md:min-h-screen md:bg-light-blue place-items-center  lg:place-content-center">
+    <main className="grid bg-magnolia mt-8 pb-4 md:pb-0 md:mt-0 md:min-h-screen md:bg-magnolia place-items-center  lg:place-content-center">
       <div className="px-4 relative">
         <div className="relative z-20 w-max mx-auto">
           <div className="flex justify-center flex-col pt-4 gap-8">
