@@ -16,7 +16,7 @@ export function AddOnForm() {
           >
             <AddOnInput
               type="checkbox"
-              className="accent-purplish-blue border rounded-md border-light-gray outline-none text-accent-purplish-blue w-5 h-5 focus:accent-purplish-blue focus:ring-2 ring-accent-purplish-blue "
+              className="accent-purplish-blue focus:outline-marine-blue border rounded-md border-light-gray outline-none text-accent-purplish-blue w-5 h-5 focus:accent-purplish-blue focus:ring-2 ring-accent-purplish-blue "
               name={name}
               id={name}
             />
