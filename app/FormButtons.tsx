@@ -30,15 +30,21 @@ export function FormButtons() {
           Go Back
         </Link>
       )}
-      {isNextButtonVisible && (
-        <button
-          type="submit"
-          className="bg-marine-blue px-4 py-2 text-white rounded-md"
-          disabled={!isNextButtonVisible}
-        >
+      {isNextButtonVisible ? (
+        <button type="submit" className="bg-marine-blue px-4 py-2 text-white rounded-md">
           Next Step
         </button>
+      ) : (
+        <ConfirmButton />
       )}
     </div>
+  )
+}
+
+function ConfirmButton() {
+  return (
+    <button type="submit" className="bg-purplish-blue px-4 py-2 text-white rounded-md">
+      Confirm
+    </button>
   )
 }

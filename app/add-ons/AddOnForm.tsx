@@ -1,21 +1,12 @@
-"use client"
-
-import { ADDONS } from "@/types"
+import { ADDONS } from "@/lib/initialData"
 import { FormButtons } from "../FormButtons"
-import Cookies from "js-cookie"
+
+import { submit } from "@/lib/submit"
+import { DetailedHTMLProps, InputHTMLAttributes } from "react"
 
 export function AddOnForm() {
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    const formData = new FormData(e.currentTarget)
-    const data = Object.fromEntries(formData.entries())
-    const currentData = Cookies.get("data")
-    console.log(currentData)
-    console.log(data)
-  }
-
   return (
-    <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
+    <form className="flex flex-col gap-3" action={submit}>
       {ADDONS.map((addOn) => {
         const name = addOn.id.toLowerCase()
         return (
@@ -23,7 +14,7 @@ export function AddOnForm() {
             className="flex [&:has(input:checked)]:bg-alabaster [&:has(input:checked)]:border-marine-blue transition-colors px-4 py-2 border border-cool-gray rounded-md items-center gap-4"
             key={name}
           >
-            <input
+            <AddOnInput
               type="checkbox"
               className="accent-purplish-blue border rounded-md border-light-gray outline-none text-accent-purplish-blue w-5 h-5 focus:accent-purplish-blue focus:ring-2 ring-accent-purplish-blue "
               name={name}
@@ -49,4 +40,10 @@ export function AddOnForm() {
       <FormButtons />
     </form>
   )
+}
+
+function AddOnInput(
+  props: DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
+) {
+  return <input {...props} name={`addon-${props.name}`} />
 }

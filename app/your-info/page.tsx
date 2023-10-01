@@ -1,13 +1,14 @@
 import { submit } from "@/lib/submit"
 import { FormButtons } from "../FormButtons"
 import { DetailedHTMLProps, InputHTMLAttributes } from "react"
+import { PageTitle } from "@/components/typography/PageTitle"
 
 export default function Home() {
   return (
     <div>
-      <h1 className="text-xl capitalize text-marine-blue font-bold tracking-tight rounded-lg">
+      <PageTitle className="text-xl capitalize text-marine-blue font-bold tracking-tight rounded-lg">
         personal info
-      </h1>
+      </PageTitle>
       <p className="text-cool-gray text-sm mt-2">
         Please fill in the information below and your goal for digital saving.
       </p>

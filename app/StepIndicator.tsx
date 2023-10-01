@@ -13,12 +13,14 @@ export function StepIndicator() {
   return (
     <ul className="inline-flex gap-4 mx-auto ">
       {validSteps.map((path, idx) => {
-        const isActive = pathname === `/${validSteps[idx]}`
+        const isActive =
+          pathname === `/${validSteps[idx]}` ||
+          (path === "summary" && pathname === "/confirmed")
 
         return (
           <li
             className={twMerge(
-              "border rounded-full text-white w-8 h-8 flex items-center justify-center",
+              "border rounded-full font-bold text-white w-8 h-8 flex items-center justify-center",
               isActive && "bg-light-blue text-marine-blue border-cool-gray"
             )}
             key={idx}

@@ -1,53 +1,70 @@
 "use server"
 
-import { cookies } from "next/headers"
-import { STEPS } from "@/types"
-import { initialData, schema } from "./initialData"
+import { cookies, headers } from "next/headers"
+
+import { Data, STEP, STEPS, initialData, schema } from "./initialData"
 import { redirect } from "next/navigation"
 
 export async function submit(formData: FormData) {
   const cookieStore = cookies()
+  const head = headers()
+  console.log(head)
 
   const currentData = cookieStore.get("data")?.value
   const lastStep = cookieStore.get("lastStep")?.value
 
+  const currentStep = head.get("next-url")?.replace("/", "")
+  console.log(currentStep)
+
+  const currentStepIndex = STEPS.indexOf(currentStep as STEP)
+  const lastStepIndex = STEPS.indexOf(lastStep as STEP)
+
+  const nextStep =
+    currentStepIndex === STEPS.length - 1 ? "" : STEPS[currentStepIndex + 1]
+
+  console.log(nextStep)
+  const addonsChecked = []
+
   try {
     const parsedData = currentData ? JSON.parse(currentData) : initialData
-    const copiedData = { ...parsedData }
-
-    const formDataObject = Object.fromEntries(formData.entries())
+    const copiedData = { ...parsedData } as Data
 
     console.log(parsedData)
-    console.log(formDataObject)
+    const entries = formData.entries() as IterableIterator<[string, string]>
+    console.log(entries)
 
-    for (const field in formDataObject) {
-      let temp
-      if (field.startsWith("user-")) {
-        temp = field.split("-")
-        console.log(temp)
-        console.log(copiedData.user[temp[1]])
-        copiedData.user[temp[1]] = formDataObject[field]
-      } else if (field.startsWith("plan-")) {
-        temp = field.split("-")
-        copiedData.plan[temp[1]] = formDataObject[field]
+    for (const [field, value] of entries) {
+      // user and plan are the only root keys in Data
+      const parts = field.split("-")
+      if (parts.length === 2) {
+        const [prefix, key] = parts as [keyof Data, keyof Data["user" | "plan"]]
+        if (copiedData[prefix]?.hasOwnProperty(key)) {
+          copiedData[prefix][key] = value
+        }
       } else if (field.startsWith("addon-")) {
-        temp = field.split("-")
-        copiedData.plan.addons[temp[1]].checked = formDataObject[field] === "on"
+        addonsChecked.push(field.replace(/^addon-/, ""))
       }
     }
+    // check if addon is checked else uncheck
+    for (const addon of copiedData.plan.addons) {
+      addon.checked = addonsChecked.includes(addon.id)
+    }
 
-    const formattedData = schema.parse(copiedData)
-    console.log(formattedData)
+    const validatedData = schema.parse(copiedData)
+    console.log(validatedData)
 
-    const stringifiedData = JSON.stringify(formattedData)
-
-    const nextStep = STEPS[STEPS.indexOf(lastStep as any) + 1]
-
+    const stringifiedData = JSON.stringify(validatedData)
     cookieStore.set("data", stringifiedData)
-    cookieStore.set("lastStep", nextStep)
-    redirect(`/${nextStep}`)
+
+    if (currentStep && currentStepIndex > lastStepIndex) {
+      cookieStore.set("lastStep", currentStep)
+    }
   } catch (error) {
     console.log(error)
-    return
+    throw error
+  }
+
+  if (nextStep) {
+    redirect(`/${nextStep}`)
   }
 }

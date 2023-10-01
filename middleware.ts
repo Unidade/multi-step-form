@@ -1,28 +1,54 @@
 import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
-import { initialData } from "./lib/initialData"
-import { STEPS } from "./types"
+import { STEPS, initialData } from "./lib/initialData"
 
 // This function can be marked `async` if using `await` inside
 export function middleware(request: NextRequest) {
-  const lastStep = request.cookies.get("lastStep")?.value
+  const lastAllowedStep = request.cookies.get("lastStep")?.value
+  const confirmedForm = request.cookies.get("confirmed")?.value === "true"
+
+  const pathname = request.nextUrl.pathname.replace("/", "")
+
+  const isCurrentPathNameAllowed =
+    // current pathname is the next step or the the current pathname is a previousStep or equal the lastAllowedStep
+    pathname === STEPS[STEPS.indexOf(lastAllowedStep as any) + 1] ||
+    STEPS.indexOf(pathname as any) >= STEPS.indexOf(lastAllowedStep as any)
 
   let response
 
-  if (!lastStep || !STEPS.includes(lastStep as any)) {
+  if (confirmedForm) {
+    return NextResponse.next()
+  }
+
+  if (
+    !lastAllowedStep ||
+    !STEPS.includes(lastAllowedStep as any) ||
+    !STEPS.includes(pathname as any)
+  ) {
     response = NextResponse.redirect(new URL("/your-info", request.nextUrl.href))
     response.cookies.set("lastStep", "your-info")
     response.cookies.set("data", JSON.stringify(initialData))
 
     return response
-  } else if (
-    STEPS.indexOf(lastStep as any) <
-    STEPS.indexOf(request.nextUrl.pathname.slice(1) as any)
-  ) {
-    response = NextResponse.redirect(new URL(`/${lastStep}`, request.nextUrl.href))
+  } else if (!isCurrentPathNameAllowed) {
+    response = NextResponse.redirect(new URL(`/${lastAllowedStep}`, request.nextUrl.href))
+    console.log(response)
 
     return response
   }
 
   return NextResponse.next()
+}
+
+export const config = {
+  matcher: [
+    /*
+     * Match all request paths except for the ones starting with:
+     * - api (API routes)
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico (favicon file)
+     */
+    "/((?!api|_next/static|_next/image|favicon.ico).*)",
+  ],
 }

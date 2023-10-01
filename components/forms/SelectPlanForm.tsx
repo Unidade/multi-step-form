@@ -1,11 +1,14 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
-import { motion, LayoutGroup } from "framer-motion"
+import { useState, useEffect, DetailedHTMLProps, InputHTMLAttributes } from "react"
+import { motion } from "framer-motion"
 import clsx from "clsx"
-import { Plan, PlanRecurrence } from "@/types"
 
-const radioCardsData = [
+import { submit } from "@/lib/submit"
+import { FormButtons } from "@/app/FormButtons"
+import { PlanName, PlanRecurrence } from "@/lib/initialData"
+
+export const radioCardsData = [
   {
     id: "arcade",
     value: "arcade",
@@ -29,23 +32,15 @@ const radioCardsData = [
   },
 ] satisfies radioCardData[]
 
-type radioCardData = {
-  id: Plan
-  value: Plan
-  label: string
-  price: string
-  Icon: React.FC
-}
-
 export function SelectPlanForm() {
   const [monthlyOrYearly, setMonthlyOrYearly] = useState<PlanRecurrence>("monthly")
-  const [selectedPlan, setSelectedPlan] = useState<Plan>("arcade")
+  const [selectedPlan, setSelectedPlan] = useState<PlanName>("arcade")
 
   const handleRecurrenceChange = () => {
     setMonthlyOrYearly((prev) => (prev === "monthly" ? "yearly" : "monthly"))
   }
 
-  const handleSelectedPlanChange = (plan: Plan) => {
+  const handleSelectedPlanChange = (plan: PlanName) => {
     setSelectedPlan(plan)
   }
 
@@ -57,7 +52,7 @@ export function SelectPlanForm() {
   }, [])
 
   return (
-    <form className="flex flex-col gap-4 mt-2">
+    <form action={submit} className="flex flex-col gap-4 mt-2">
       {radioCardsData.map((radio) => {
         return (
           <RadioCard
@@ -69,7 +64,6 @@ export function SelectPlanForm() {
           />
         )
       })}
-
       <div className="mt-4 inline-flex mx-auto gap-2 font-bold text-cool-gray">
         <span
           className={clsx("transition-colors", {
@@ -78,20 +72,26 @@ export function SelectPlanForm() {
         >
           Monthly
         </span>
-        <input
-          type="checkbox"
+        <PlanInput
+          type="hidden"
           name="recurrence"
-          className="hidden peer"
-          value="monthly"
-          id="monthly"
-          checked={monthlyOrYearly === "monthly"}
+          value={monthlyOrYearly}
+          id="recurrence"
+        />
+        <PlanInput
+          className="hidden"
+          type="hidden"
+          name="price"
+          id={"price"}
+          value={radioCardsData.find((card) => card.id === selectedPlan)?.price}
+          required
         />
         <motion.div
           layout
           layoutRoot
           onClick={handleRecurrenceChange}
-          className="data-[isMonthly=false]:justify-end justify-start flex items-center bg-marine-blue w-11  rounded-xl p-[3px]"
-          data-isMonthly={monthlyOrYearly === "monthly" ? "true" : "false"}
+          className="data-[ismonthly=false]:justify-end justify-start flex items-center bg-marine-blue w-11  rounded-xl p-[3px]"
+          data-ismonthly={monthlyOrYearly === "monthly" ? "true" : "false"}
         >
           <motion.div
             transition={spring}
@@ -108,17 +108,7 @@ export function SelectPlanForm() {
         </span>
       </div>
 
-      <div className="absolute w-full flex justify-between bottom-[-50px] right-0">
-        <button
-          type="submit"
-          className="px-4 py-2 transition-all hover:text-marine-blue text-cool-gray rounded-md"
-        >
-          Go Back
-        </button>
-        <button type="submit" className="bg-marine-blue px-4 py-2 text-white rounded-md">
-          Next Step
-        </button>
-      </div>
+      <FormButtons />
     </form>
   )
 }
@@ -129,14 +119,16 @@ const spring = {
   damping: 30,
 }
 
-interface RadioCardProps {
-  id: string
-  value: Plan
+type radioCardData = {
+  id: PlanName
+  value: PlanName
   label: string
   price: string
   Icon: React.FC
+}
+type RadioCardProps = radioCardData & {
   selected: string
-  onClick: (e: Plan) => void
+  onClick: (e: PlanName) => void
   monthly?: boolean
 }
 
@@ -155,19 +147,20 @@ function RadioCard({
 
   return (
     <div>
-      <input
+      <PlanInput
         className="hidden peer"
         type="radio"
-        name="plan"
+        name="name"
         id={id}
         value={value}
         required
         data-id={id}
         checked={value === selected}
+        onChange={(e) => onClick(e.currentTarget.value as PlanName)}
       />
+
       <label
         htmlFor={id}
-        onClick={() => onClick(value)}
         className="flex gap-4 text-sm  items-center p-4 rounded-lg border border-light-gray transition-all peer-checked:border-marine-blue peer-checked:bg-alabaster text-marine-blue "
       >
         <Icon />
@@ -189,6 +182,12 @@ function RadioCard({
       </label>
     </div>
   )
+}
+
+function PlanInput(
+  props: DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
+) {
+  return <input {...props} name={`plan-${props.name}`} />
 }
 
 function ArcadeIcon() {
