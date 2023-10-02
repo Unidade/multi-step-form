@@ -1,7 +1,7 @@
 "use client"
 import { twMerge } from "tailwind-merge"
 import { usePathname } from "next/navigation"
-import { validStepType, validSteps } from "./StepIndicator"
+import { validStepType, validSteps } from "../shared/StepIndicator"
 import Link from "next/link"
 
 export function FormButtons() {

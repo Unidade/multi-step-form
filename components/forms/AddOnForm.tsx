@@ -1,5 +1,5 @@
 import { ADDONS } from "@/lib/initialData"
-import { FormButtons } from "../FormButtons"
+import { FormButtons } from "./FormButtons"
 
 import { submit } from "@/lib/submit"
 import { DetailedHTMLProps, InputHTMLAttributes } from "react"

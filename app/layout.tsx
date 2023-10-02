@@ -1,6 +1,6 @@
-import { Container } from "./Container"
-import { SidebarMobile } from "./SidebarMobile"
-import { StepIndicator } from "./StepIndicator"
+import { Container } from "../components/shared/Container"
+import { SidebarMobile } from "../components/shared/SidebarMobile"
+import { StepIndicator } from "../components/shared/StepIndicator"
 import "./globals.css"
 import localFont from "next/font/local"
 

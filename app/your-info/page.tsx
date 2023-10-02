@@ -1,5 +1,5 @@
 import { submit } from "@/lib/submit"
-import { FormButtons } from "../FormButtons"
+import { FormButtons } from "../../components/forms/FormButtons"
 import { DetailedHTMLProps, InputHTMLAttributes } from "react"
 import { PageTitle } from "@/components/typography/PageTitle"
 import { twMerge } from "tailwind-merge"

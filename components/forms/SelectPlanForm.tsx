@@ -5,7 +5,7 @@ import { motion } from "framer-motion"
 import clsx from "clsx"
 
 import { submit } from "@/lib/submit"
-import { FormButtons } from "@/app/FormButtons"
+import { FormButtons } from "@/components/forms/FormButtons"
 import { PlanName, PlanRecurrence } from "@/lib/initialData"
 
 export const radioCardsData = [

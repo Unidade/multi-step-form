@@ -1,7 +1,7 @@
 import { Data } from "@/lib/initialData"
 import { cookies } from "next/headers"
 import Link from "next/link"
-import { FormButtons } from "../FormButtons"
+import { FormButtons } from "../../components/forms/FormButtons"
 import { confirm } from "@/lib/confirm"
 import { PageTitle } from "@/components/typography/PageTitle"
 

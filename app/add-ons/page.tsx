@@ -1,5 +1,5 @@
 import { PageTitle } from "@/components/typography/PageTitle"
-import { AddOnForm } from "./AddOnForm"
+import { AddOnForm } from "../../components/forms/AddOnForm"
 
 export default function Home() {
   return (
