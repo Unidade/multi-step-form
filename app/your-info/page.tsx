@@ -14,7 +14,7 @@ export default function Home() {
         Please fill in the information below and your goal for digital saving.
       </p>
 
-      <form action={submit} className="flex flex-col gap-4 mt-4">
+      <form noValidate action={submit} className="flex flex-col gap-4 mt-4">
         <div className="flex flex-col-reverse">
           <UserInput
             placeholder="e.g Stephen King"
@@ -27,7 +27,7 @@ export default function Home() {
             <label className="capitalize text-marine-blue" htmlFor="name">
               name
             </label>
-            <span className="hidden  text-xs font-bold text-strawberry-red">
+            <span className="hidden text-xs font-bold text-strawberry-red">
               This field is required
             </span>
           </div>
