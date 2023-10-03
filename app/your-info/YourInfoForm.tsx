@@ -131,7 +131,7 @@ function InputWithErrorHandler({
               setErrors((prev) => ({
                 ...prev,
                 [name]: {
-                  message: "Invalid email",
+                  message: `Invalid ${name}`,
                 },
               }))
             }
