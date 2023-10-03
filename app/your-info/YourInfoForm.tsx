@@ -145,8 +145,8 @@ function InputWithErrorHandler({
         required
         {...rest}
       />
-      <div className="flex justify-between peer-[:user-invalid]:[&>span]:block">
-        <label className="capitalize text-marine-blue" htmlFor="email">
+      <div className="flex justify-between">
+        <label className="capitalize text-marine-blue" htmlFor={name}>
           {label}
         </label>
         {errors[name].message && (
