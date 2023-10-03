@@ -8,8 +8,6 @@ import { PageTitle } from "@/components/typography/PageTitle"
 export default function Home() {
   const data = getData()
 
-  console.log(data)
-
   let recurrence: "mo" | "yr"
   let planPrice = Number(data.plan.price)
 

@@ -43,7 +43,10 @@ export function FormButtons() {
 
 function ConfirmButton() {
   return (
-    <button type="submit" className="bg-purplish-blue px-4 py-2 text-white rounded-md">
+    <button
+      type="submit"
+      className="bg-purplish-blue px-4 py-2 text-white rounded-md hover:bg-pastel-blue transition-colors"
+    >
       Confirm
     </button>
   )

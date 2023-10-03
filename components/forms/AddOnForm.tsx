@@ -2,7 +2,7 @@ import { ADDONS } from "@/lib/initialData"
 import { FormButtons } from "./FormButtons"
 
 import { submit } from "@/lib/submit"
-import { DetailedHTMLProps, InputHTMLAttributes } from "react"
+import { AddOnInput } from "./AddOnInput"
 
 export function AddOnForm() {
   return (
@@ -37,10 +37,4 @@ export function AddOnForm() {
       <FormButtons />
     </form>
   )
-}
-
-function AddOnInput(
-  props: DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
-) {
-  return <input {...props} name={`addon-${props.name}`} />
 }
