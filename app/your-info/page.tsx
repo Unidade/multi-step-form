@@ -1,8 +1,6 @@
-import { submit } from "@/lib/submit"
-import { FormButtons } from "../../components/forms/FormButtons"
 import { PageTitle } from "@/components/typography/PageTitle"
-import { UserInput } from "../../components/forms/UserInput"
-import { YourInfoForm } from "./YourInfoForm"
+
+import { YourInfoForm } from "@/components/forms/YourInfoForm"
 
 export default function Home() {
   return (
