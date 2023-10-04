@@ -13,7 +13,7 @@ export function middleware(request: NextRequest) {
     // current pathname is the next step or the the current pathname is a previousStep or equal the lastAllowedStep
     // for example if the last allowed step is "your-info" and the current pathname can be "your-info" or "select-plan", otherwise redirect to the last allowed step
     pathname === STEPS[STEPS.indexOf(lastAllowedStep as any) + 1] ||
-    STEPS.indexOf(pathname as any) >= STEPS.indexOf(lastAllowedStep as any)
+    STEPS.indexOf(pathname as any) <= STEPS.indexOf(lastAllowedStep as any)
 
   let response
 
@@ -33,7 +33,6 @@ export function middleware(request: NextRequest) {
     return response
   } else if (!isCurrentPathNameAllowed) {
     response = NextResponse.redirect(new URL(`/${lastAllowedStep}`, request.nextUrl.href))
-    console.log(response)
 
     return response
   }
@@ -49,7 +48,7 @@ export const config = {
      * - _next/static (static files)
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
-     * - Query string ?_rsc
+     * - Query string ?_rsc (pre-fetch requests)
      */
     "/((?!api|_next/static|_next/image|favicon.ico|:path?_rsc=*).*)",
   ],
