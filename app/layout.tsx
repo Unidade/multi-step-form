@@ -5,7 +5,11 @@ import { StepIndicator } from "../components/shared/StepIndicator"
 import "./globals.css"
 import localFont from "next/font/local"
 
+<<<<<<< HEAD
 export const metadata: Metadata = {
+=======
+const metadata: Metadata = {
+>>>>>>> 76856396804deb80488e200c497bec498726b4e2
   title: "Multi-Step Form Frontend Mentor Challenge",
   description: "Multi-Step Form created with Next.js + Tailwind CSS + Framer Motion",
 }
