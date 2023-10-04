@@ -1,8 +1,14 @@
+import { Metadata } from "next"
 import { Container } from "../components/shared/Container"
 import { SidebarMobile } from "../components/shared/SidebarMobile"
 import { StepIndicator } from "../components/shared/StepIndicator"
 import "./globals.css"
 import localFont from "next/font/local"
+
+export const metadata: Metadata = {
+  title: "Multi-Step Form Frontend Mentor Challenge",
+  description: "Multi-Step Form created with Next.js + Tailwind CSS + Framer Motion",
+}
 
 const UbuntuRegular = localFont({
   src: [
