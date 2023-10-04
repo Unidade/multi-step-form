@@ -4,37 +4,47 @@ import { STEPS, initialData } from "./lib/initialData"
 
 // This function can be marked `async` if using `await` inside
 export function middleware(request: NextRequest) {
-  const lastAllowedStep = request.cookies.get("lastStep")?.value
-  const confirmedForm = request.cookies.get("confirmed")?.value === "true"
+  const furthestVisitedStep = request.cookies.get("furthestVisitedStep")?.value
+  const data = request.cookies.get("data")?.value ?? JSON.stringify(initialData)
 
   const pathname = request.nextUrl.pathname.replace("/", "")
+  const isCurrentPathTheFirstStep = pathname === STEPS[0]
 
-  const isCurrentPathNameAllowed =
-    // current pathname is the next step or the the current pathname is a previousStep or equal the lastAllowedStep
-    // for example if the last allowed step is "your-info" and the current pathname can be "your-info" or "select-plan", otherwise redirect to the last allowed step
-    pathname === STEPS[STEPS.indexOf(lastAllowedStep as any) + 1] ||
-    STEPS.indexOf(pathname as any) <= STEPS.indexOf(lastAllowedStep as any)
+  const indexOfTheFurthestAllowedStep = STEPS.indexOf(furthestVisitedStep as any) + 1
 
-  let response
+  const isCurrentPathAllowed =
+    STEPS.includes(pathname as any) &&
+    STEPS.indexOf(pathname as any) <= indexOfTheFurthestAllowedStep
 
-  if (confirmedForm) {
-    return NextResponse.next()
+  console.log(
+    JSON.stringify(
+      {
+        furthestVisitedStep,
+        data,
+        pathname,
+        isCurrentPathTheFirstStep,
+        indexOfTheFurthestAllowedStep,
+        isCurrentPathAllowed,
+      },
+      null,
+      2
+    )
+  )
+
+  // First visit, set the default cookies values
+  if (isCurrentPathTheFirstStep && !furthestVisitedStep) {
+    const response = NextResponse.next()
+    response.cookies.set("data", data)
+    response.cookies.set("furthestVisitedStep", STEPS[0])
+
+    return response
   }
 
-  if (
-    !lastAllowedStep ||
-    !STEPS.includes(lastAllowedStep as any) ||
-    !STEPS.includes(pathname as any)
-  ) {
-    response = NextResponse.redirect(new URL("/your-info", request.nextUrl.href))
-    response.cookies.set("lastStep", "your-info")
-    response.cookies.set("data", JSON.stringify(initialData))
-
-    return response
-  } else if (!isCurrentPathNameAllowed) {
-    response = NextResponse.redirect(new URL(`/${lastAllowedStep}`, request.nextUrl.href))
-
-    return response
+  // else redirect to the furthest allowed step
+  else if (!isCurrentPathAllowed) {
+    return NextResponse.rewrite(
+      new URL(`/${furthestVisitedStep || STEPS[0]}`, request.url)
+    )
   }
 
   return NextResponse.next()

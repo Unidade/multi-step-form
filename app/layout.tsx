@@ -31,7 +31,7 @@ const UbuntuRegular = localFont({
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${UbuntuRegular.variable} lg:text-[18px]`}>
+    <html lang="en" className={`${UbuntuRegular.variable} 2xl:text-[18px]`}>
       <body>
         <header className="relative md:hidden flex justify-center z-10">
           <SidebarMobile className="fixed  md:hidden z-10 w-full h-auto" />

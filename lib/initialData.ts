@@ -2,7 +2,13 @@ import { z } from "zod"
 
 export const PLANS = ["arcade", "advanced", "pro"] as const
 export const RECURRENCE = ["monthly", "yearly"] as const
-export const STEPS = ["your-info", "select-plan", "add-ons", "summary"] as const
+export const STEPS = [
+  "your-info",
+  "select-plan",
+  "add-ons",
+  "summary",
+  "confirmed",
+] as const
 
 export const ADDONS = [
   {

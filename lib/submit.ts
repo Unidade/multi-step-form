@@ -11,7 +11,7 @@ export async function submit(formData: FormData) {
   console.log(head)
 
   const currentData = cookieStore.get("data")?.value
-  const lastStep = cookieStore.get("lastStep")?.value
+  const lastStep = cookieStore.get("furthestVisitedStep")?.value
 
   const currentStep = head.get("next-url")?.replace("/", "")
   console.log(currentStep)
@@ -57,7 +57,7 @@ export async function submit(formData: FormData) {
     cookieStore.set("data", stringifiedData)
 
     if (currentStep && currentStepIndex > lastStepIndex) {
-      cookieStore.set("lastStep", currentStep)
+      cookieStore.set("furthestVisitedStep", currentStep)
     }
   } catch (error) {
     console.log(error)

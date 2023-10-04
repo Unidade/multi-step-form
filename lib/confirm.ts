@@ -7,11 +7,10 @@ export async function confirm() {
   const cookieStore = cookies()
   const head = headers()
 
-  const pathname = head.get("next-url")?.replace("/", "")
+  const pathname = head.get("next-url")?.replace("/", "") as (typeof STEPS)[number]
 
-  if (pathname === STEPS[STEPS.length - 1]) {
-    cookieStore.set("confirmed", "true")
+  cookieStore.set("confirmed", "true")
+  cookieStore.set("furthestVisitedStep", pathname)
 
-    return redirect("/confirmed")
-  }
+  return redirect("/confirmed")
 }
