@@ -4,7 +4,7 @@ import { AddOnForm } from "../../components/forms/AddOnForm"
 export default function Home() {
   return (
     <div>
-      <PageTitle className="text-xl capitalize text-marine-blue font-bold tracking-tight rounded-lg">
+      <PageTitle className="capitalize text-marine-blue font-bold tracking-tight rounded-lg">
         Pick add-ons
       </PageTitle>
       <p className="text-cool-gray text-sm mt-2">

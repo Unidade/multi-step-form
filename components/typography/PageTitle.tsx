@@ -9,7 +9,7 @@ export function PageTitle({ children, className }: PageTitleProps) {
   return (
     <h1
       className={twMerge(
-        "text-2xl capitalize text-marine-blue font-bold tracking-tight rounded-lg",
+        "text-3xl capitalize text-marine-blue font-bold tracking-tight rounded-lg",
         className
       )}
     >

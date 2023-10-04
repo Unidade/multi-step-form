@@ -30,7 +30,7 @@ export function StepIndicator({ className }: { className?: string }) {
             >
               {stepNumber}
             </Link>
-            <div className="hidden md:flex md:flex-col">
+            <div className="hidden text-xs md:flex md:flex-col">
               <span className="text-light-gray">STEP: {stepNumber}</span>
               <span className="uppercase md:text-white">{path.replace("-", " ")}</span>
             </div>

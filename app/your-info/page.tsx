@@ -5,7 +5,7 @@ import { YourInfoForm } from "@/components/forms/YourInfoForm"
 export default function Home() {
   return (
     <div className="flex-1">
-      <PageTitle className="text-xl capitalize text-marine-blue font-bold tracking-tight rounded-lg">
+      <PageTitle className="capitalize text-marine-blue font-bold tracking-tight rounded-lg">
         personal info
       </PageTitle>
       <p className="text-cool-gray text-sm mt-2">

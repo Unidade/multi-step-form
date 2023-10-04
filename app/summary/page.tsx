@@ -28,7 +28,7 @@ export default function Home() {
 
   return (
     <div className="w-full">
-      <PageTitle className="text-xl capitalize text-marine-blue font-bold tracking-tight rounded-lg">
+      <PageTitle className="capitalize text-marine-blue font-bold tracking-tight rounded-lg">
         Finishing up
       </PageTitle>
       <p className="text-cool-gray text-sm mt-2">
