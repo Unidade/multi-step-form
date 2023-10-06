@@ -1,6 +1,6 @@
 import { PageTitle } from "@/components/PageTitle"
 
-import { YourInfoForm } from "@/components/forms/YourInfoForm"
+import { YourInfoForm } from "@/components/forms/Form"
 import { getData } from "@/lib/getData"
 
 export default function Home() {
@@ -15,7 +15,7 @@ export default function Home() {
         Please fill in the information below and your goal for digital saving.
       </p>
 
-      <YourInfoForm savedValues={data.user} />
+      <YourInfoForm initialValues={data.user} />
     </div>
   )
 }

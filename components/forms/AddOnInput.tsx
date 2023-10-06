@@ -1,5 +1,5 @@
 import { DetailedHTMLProps, InputHTMLAttributes } from "react"
-import { InputWithPrefix } from "./InputWithPrefix"
+import { Input } from "./InputWithPrefix"
 
 type AddOnInputProps = DetailedHTMLProps<
   InputHTMLAttributes<HTMLInputElement>,
@@ -7,5 +7,5 @@ type AddOnInputProps = DetailedHTMLProps<
 >
 
 export function AddOnInput(props: AddOnInputProps) {
-  return <InputWithPrefix {...props} prefix="addon" />
+  return <Input {...props} prefix="addon" />
 }

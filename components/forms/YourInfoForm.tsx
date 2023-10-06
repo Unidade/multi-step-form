@@ -1,7 +1,7 @@
 "use client"
 
 import { FormButtons } from "@/components/forms/FormButtons"
-import { UserInput, UserInputProps } from "@/components/forms/UserInput"
+import { UserInput, UserInputProps } from "@/components/forms/Input"
 import { submit } from "@/lib/submit"
 import { HTMLInputTypeAttribute, useState } from "react"
 import { twMerge } from "tailwind-merge"

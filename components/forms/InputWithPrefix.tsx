@@ -1,4 +1,5 @@
 import { DetailedHTMLProps, InputHTMLAttributes } from "react"
+import { twMerge } from "tailwind-merge"
 
 type InputWithPrefixProps = DetailedHTMLProps<
   InputHTMLAttributes<HTMLInputElement>,
@@ -7,6 +8,15 @@ type InputWithPrefixProps = DetailedHTMLProps<
   prefix: string
 }
 
-export function InputWithPrefix({ prefix, ...rest }: InputWithPrefixProps) {
-  return <input {...rest} name={`${prefix}-${rest.name}`} />
+export function Input({ prefix, ...rest }: InputWithPrefixProps) {
+  return (
+    <input
+      {...rest}
+      name={`${prefix}-${rest.name}`}
+      className={twMerge(
+        "w-full pl-4 rounded-sm peer lg:rounded-md focus:outline-purplish-blue placeholder:text-cool-gray border border-cool-gray py-2",
+        rest.className
+      )}
+    />
+  )
 }

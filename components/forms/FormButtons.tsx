@@ -5,8 +5,7 @@ import { validStepType, validSteps } from "../StepIndicator"
 import Link from "next/link"
 
 export function FormButtons() {
-  const pathname = usePathname()
-  const currentStep = pathname.replace("/", "") as validStepType
+  const currentStep = usePathname().replace("/", "") as validStepType
 
   const currentStepIndex = validSteps.indexOf(currentStep)
 

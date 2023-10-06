@@ -48,26 +48,34 @@ export const initialData: Data = {
   },
 }
 
-export const schema = z.object({
-  user: z.object({
-    name: z.string(),
-    email: z.string().email(),
-    phone: z.string(),
-  }),
-  plan: z.object({
-    name: z.enum(PLANS),
-    recurrence: z.enum(RECURRENCE),
+const phoneRegex = new RegExp(/^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/)
+
+export const usersSchema = z.object({
+  name: z.string(),
+  email: z.string().email(),
+  phone: z.string().regex(phoneRegex, "Invalid number"),
+})
+
+export const addonsSchema = z.array(
+  z.object({
+    id: z.string(),
     price: z.string(),
-    addons: z.array(
-      z.object({
-        id: z.string(),
-        price: z.string(),
-        title: z.string(),
-        subtitle: z.string(),
-        checked: z.boolean().default(false),
-      })
-    ),
-  }),
+    title: z.string(),
+    subtitle: z.string(),
+    checked: z.boolean().default(false),
+  })
+)
+
+export const planSchema = z.object({
+  name: z.enum(PLANS),
+  recurrence: z.enum(RECURRENCE),
+  price: z.string(),
+  addons: addonsSchema,
+})
+
+export const schema = z.object({
+  user: usersSchema,
+  plan: planSchema,
 })
 
 export type Data = z.infer<typeof schema>
