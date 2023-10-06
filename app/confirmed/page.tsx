@@ -1,4 +1,4 @@
-import { PageTitle } from "@/components/typography/PageTitle"
+import { PageTitle } from "@/components/PageTitle"
 
 export default function Confirmed() {
   return (

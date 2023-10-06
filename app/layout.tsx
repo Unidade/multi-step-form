@@ -1,9 +1,8 @@
 import { Metadata } from "next"
-import { Container } from "../components/shared/Container"
-import { SidebarMobile } from "../components/shared/SidebarMobile"
-import { StepIndicator } from "../components/shared/StepIndicator"
+import { MainContainer } from "../components/MainContainer"
 import "./globals.css"
 import localFont from "next/font/local"
+import { Navigation } from "@/components/Navigation"
 
 export const metadata: Metadata = {
   title: "Multi-Step Form Frontend Mentor Challenge",
@@ -31,13 +30,14 @@ const UbuntuRegular = localFont({
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${UbuntuRegular.variable} 2xl:text-[18px]`}>
-      <body>
-        <header className="relative md:hidden flex justify-center z-10">
-          <SidebarMobile className="fixed  md:hidden z-10 w-full h-auto" />
-          <StepIndicator className="z-20 mt-4" />
-        </header>
-        <Container>{children}</Container>
+    <html lang="en" className={`${UbuntuRegular.variable}`}>
+      <body className="app">
+        <div className="wrapper">
+          <header>
+            <Navigation />
+          </header>
+          <MainContainer>{children}</MainContainer>
+        </div>
       </body>
     </html>
   )

@@ -1,9 +1,8 @@
-import { Data } from "@/lib/initialData"
-import { cookies } from "next/headers"
 import Link from "next/link"
 import { FormButtons } from "../../components/forms/FormButtons"
 import { confirm } from "@/lib/confirm"
-import { PageTitle } from "@/components/typography/PageTitle"
+import { PageTitle } from "@/components/PageTitle"
+import { getData } from "@/lib/getData"
 
 export default function Home() {
   const data = getData()
@@ -18,16 +17,16 @@ export default function Home() {
     recurrence = "mo"
   }
 
-  const totalPrice = data.plan.addons.reduce((acc, addon) => {
+  const selectedAddons = data.plan.addons.filter((addon) => addon.checked)
+
+  const totalPrice = selectedAddons.reduce((acc, addon) => {
     const addonPrice =
       recurrence === "mo" ? Number(addon.price) : Number(addon.price) * 10
     return acc + addonPrice
   }, planPrice)
 
-  console.log(totalPrice)
-
   return (
-    <div className="w-full">
+    <div className="flex flex-col flex-1 justify-end">
       <PageTitle className="capitalize text-marine-blue font-bold tracking-tight rounded-lg">
         Finishing up
       </PageTitle>
@@ -56,7 +55,7 @@ export default function Home() {
             <div className="w-full h-[1px] bg-light-gray mt-3" />
 
             <ul className="flex flex-col gap-2 text-sm mt-3">
-              {data.plan.addons.map((addon) => {
+              {selectedAddons.map((addon) => {
                 const addonPrice =
                   recurrence === "mo" ? Number(addon.price) : Number(addon.price) * 10
 
@@ -83,24 +82,9 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <form action={confirm}>
+      <form className="flex-1 flex items-end pb-4" action={confirm}>
         <FormButtons />
       </form>
     </div>
   )
-}
-
-function getData(): Data {
-  const cookieStore = cookies()
-
-  try {
-    const data = cookieStore.get("data")?.value
-    if (!data) throw new Error("No data found")
-
-    const dataJson = JSON.parse(data)
-    return dataJson
-  } catch (e) {
-    console.error(e)
-    throw e
-  }
 }

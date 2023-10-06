@@ -16,3 +16,62 @@
   --alabaster: hsl(231, 100%, 99%);
   --white: hsl(0, 0%, 100%);
 }
+
+@layer components {
+  .app {
+    min-height: 100dvh;
+    background-color: var(--alabaster);
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .wrapper {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    background-color: var(--magnolia);
+    max-width: 90rem;
+    width: 100%;
+    min-height: 100dvh;
+    position: relative;
+  }
+
+  .content__container {
+    align-content: center;
+    justify-self: center;
+    background-color: var(--white);
+    margin-top: -40px;
+    padding: 20px;
+    width: 90%;
+    min-height: 100%;
+    display: grid;
+    grid-template-rows: auto 1fr;
+    text-align: start;
+    gap: 30px;
+    border-radius: 15px;
+    box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+    margin-bottom: 20px;
+  }
+
+  @media (min-width: 48em) {
+    .wrapper {
+      width: auto;
+      grid-template-rows: auto;
+      background-color: var(--white);
+      grid-template-columns: minmax(274px, auto) 1fr;
+      gap: 50px;
+      padding: 20px;
+      min-height: auto;
+      border-radius: 15px;
+      box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+    }
+
+    .app {
+      padding: 10px;
+      align-items: center;
+      justify-content: center;
+      text-align: start;
+      background-color: var(--magnolia);
+    }
+  }
+}

@@ -1,8 +1,11 @@
-import { PageTitle } from "@/components/typography/PageTitle"
+import { PageTitle } from "@/components/PageTitle"
 
 import { YourInfoForm } from "@/components/forms/YourInfoForm"
+import { getData } from "@/lib/getData"
 
 export default function Home() {
+  const data = getData()
+
   return (
     <div className="flex-1">
       <PageTitle className="capitalize text-marine-blue font-bold tracking-tight rounded-lg">
@@ -12,7 +15,7 @@ export default function Home() {
         Please fill in the information below and your goal for digital saving.
       </p>
 
-      <YourInfoForm />
+      <YourInfoForm savedValues={data.user} />
     </div>
   )
 }

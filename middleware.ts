@@ -16,21 +16,6 @@ export function middleware(request: NextRequest) {
     STEPS.includes(pathname as any) &&
     STEPS.indexOf(pathname as any) <= indexOfTheFurthestAllowedStep
 
-  console.log(
-    JSON.stringify(
-      {
-        furthestVisitedStep,
-        data,
-        pathname,
-        isCurrentPathTheFirstStep,
-        indexOfTheFurthestAllowedStep,
-        isCurrentPathAllowed,
-      },
-      null,
-      2
-    )
-  )
-
   // First visit, set the default cookies values
   if (isCurrentPathTheFirstStep && !furthestVisitedStep) {
     const response = NextResponse.next()

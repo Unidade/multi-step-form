@@ -1,7 +1,10 @@
 import { SelectPlanForm } from "@/components/forms/SelectPlanForm"
-import { PageTitle } from "@/components/typography/PageTitle"
+import { PageTitle } from "@/components/PageTitle"
+import { getData } from "@/lib/getData"
 
 export default function Home() {
+  const data = getData()
+
   return (
     <div>
       <PageTitle className="capitalize text-marine-blue font-bold tracking-tight rounded-lg">
@@ -11,7 +14,7 @@ export default function Home() {
         You have the option of monthly or yearly billing
       </p>
 
-      <SelectPlanForm />
+      <SelectPlanForm savedValues={data.plan} />
     </div>
   )
 }

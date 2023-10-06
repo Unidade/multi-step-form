@@ -78,7 +78,7 @@ const Addon = schema.shape.plan.pick({
 const Plan = schema.shape.plan.pick({ name: true })
 const Recurrence = schema.shape.plan.pick({ recurrence: true })
 
-export type Addon = z.infer<typeof Addon>
+export type Addon = z.infer<typeof Addon>["addons"][number]
 export type PlanName = z.infer<typeof Plan>["name"]
 export type PlanRecurrence = z.infer<typeof Recurrence>["recurrence"]
 export type STEP = (typeof STEPS)[number]

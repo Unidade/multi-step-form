@@ -19,12 +19,12 @@ const InitialErrors = {
 }
 type InitialErrors = typeof InitialErrors
 
-const initialFormValues = {
+const emptyInitialFormValues = {
   name: "",
   email: "",
   phone: "",
 }
-type initialFormValues = typeof initialFormValues
+type initialFormValues = typeof emptyInitialFormValues
 
 const InputsData = [
   {
@@ -48,8 +48,12 @@ const InputsData = [
   },
 ] as const
 
-export function YourInfoForm() {
-  const [formValues, setFormValues] = useState(initialFormValues)
+interface YourInfoFormProps {
+  savedValues?: initialFormValues
+}
+
+export function YourInfoForm({ savedValues }: YourInfoFormProps) {
+  const [formValues, setFormValues] = useState(savedValues || emptyInitialFormValues)
   const [errors, setErrors] = useState(InitialErrors)
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {

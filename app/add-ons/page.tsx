@@ -1,7 +1,10 @@
-import { PageTitle } from "@/components/typography/PageTitle"
+import { PageTitle } from "@/components/PageTitle"
 import { AddOnForm } from "../../components/forms/AddOnForm"
+import { getData } from "@/lib/getData"
 
 export default function Home() {
+  const data = getData()
+
   return (
     <div>
       <PageTitle className="capitalize text-marine-blue font-bold tracking-tight rounded-lg">
@@ -12,7 +15,7 @@ export default function Home() {
       </p>
 
       <div className="mt-4">
-        <AddOnForm />
+        <AddOnForm savedAddonsValues={data.plan.addons} />
       </div>
     </div>
   )

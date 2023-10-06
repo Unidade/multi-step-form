@@ -32,9 +32,20 @@ export const radioCardsData = [
   },
 ] satisfies radioCardData[]
 
-export function SelectPlanForm() {
-  const [monthlyOrYearly, setMonthlyOrYearly] = useState<PlanRecurrence>("monthly")
-  const [selectedPlan, setSelectedPlan] = useState<PlanName>("arcade")
+interface SelectPlanFormProps {
+  savedValues?: {
+    name: PlanName
+    recurrence: PlanRecurrence
+  }
+}
+
+export function SelectPlanForm({ savedValues }: SelectPlanFormProps) {
+  const [monthlyOrYearly, setMonthlyOrYearly] = useState<PlanRecurrence>(
+    savedValues?.recurrence || "monthly"
+  )
+  const [selectedPlan, setSelectedPlan] = useState<PlanName>(
+    savedValues?.name || "arcade"
+  )
 
   const handleRecurrenceChange = () => {
     setMonthlyOrYearly((prev) => (prev === "monthly" ? "yearly" : "monthly"))
