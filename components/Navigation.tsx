@@ -1,9 +1,15 @@
 import { twMerge } from "tailwind-merge"
 import { NavItem } from "./NavItem"
-import { STEPS } from "@/lib/initialData"
+import { STEP, STEPS } from "@/lib/initialData"
+import { cookies } from "next/headers"
 
 export function Navigation() {
-  const stepsWithoutLast = STEPS.slice(0, -1)
+  const stepsWithoutConfirmed = STEPS.slice(0, -1)
+
+  const cookieStore = cookies()
+  const furthestVisitedStep = cookieStore.get("furthestVisitedStep")?.value ?? STEPS[0]
+
+  const furthestVisitedStepIndex = STEPS.indexOf(furthestVisitedStep as STEP)
 
   return (
     <nav
@@ -13,8 +19,16 @@ export function Navigation() {
       )}
     >
       <ul className="flex w-full md:flex-col justify-center md:justify-start gap-10">
-        {stepsWithoutLast.map((step) => {
-          return <NavItem key={step} href={step} title={step.replaceAll("-", " ")} />
+        {stepsWithoutConfirmed.map((step, idx) => {
+          return (
+            <NavItem
+              key={step}
+              stepIndex={idx}
+              href={step}
+              title={step.replaceAll("-", " ")}
+              furthestVisitedStepIndex={furthestVisitedStepIndex}
+            />
+          )
         })}
       </ul>
     </nav>
