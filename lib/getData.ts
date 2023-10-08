@@ -1,11 +1,9 @@
-import { cookies } from "next/headers"
 import { Data } from "./initialData"
+import { getCookie } from "./getCookite"
 
 export function getData(): Data {
-  const cookieStore = cookies()
-
   try {
-    const data = cookieStore.get("data")?.value
+    const data = getCookie("data")?.value
     if (!data) throw new Error("No data found")
 
     const dataJson = JSON.parse(data)
@@ -15,5 +13,3 @@ export function getData(): Data {
     throw e
   }
 }
-
-

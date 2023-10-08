@@ -21,8 +21,7 @@ export function middleware(request: NextRequest) {
   if (isCurrentPathTheFirstStep && !furthestVisitedStep) {
     // redirect to itself to revalidate the cookies, in the next request will be Next
     const response = NextResponse.next()
-    request.cookies.set("data", stringifiedData)
-    request.cookies.set("furthestVisitedStep", STEPS[0])
+
     response.cookies.set("data", stringifiedData)
     response.cookies.set("furthestVisitedStep", STEPS[0])
 
