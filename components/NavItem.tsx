@@ -1,6 +1,5 @@
 "use client"
 
-import { STEPS } from "@/lib/initialData"
 import clsx from "clsx"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
