@@ -1,40 +1,71 @@
-import { ADDONS } from "@/lib/initialData"
+"use client"
+
+import { Addon, Plan } from "@/lib/initialData"
 import { FormButtons } from "./FormButtons"
 
 import { submit } from "@/lib/submit"
-import { AddOnInput } from "./AddOnInput"
 
-export function AddOnForm() {
+import { useForm } from "@mantine/form"
+
+import { Form } from "./Form"
+
+interface AddOnFormProps {
+  plan: Plan
+}
+
+export function AddOnForm({ plan }: AddOnFormProps) {
+  const form = useForm({
+    initialValues: {
+      addons: plan.addons,
+    },
+  })
+
+  const fields = form.values.addons.map((addon, index) => {
+    const recurrence = plan.recurrence === "yearly" ? "yr" : "mo"
+    const price = plan.recurrence === "yearly" ? addon.price * 10 : addon.price
+
+    return (
+      <div
+        className="flex gap-4 p-4 outline outline-1 rounded-md items-center"
+        key={addon.id}
+      >
+        <input
+          type="checkbox"
+          className="w-5 h-5 accent-purplish-blue"
+          {...form.getInputProps(`addons.${index}.active`, { type: "checkbox" })}
+        />
+        <div className="flex-1">
+          <h3 className="font-bold text-lg text-marine-blue leading-7">{addon.title}</h3>
+          <p className="text-cool-gray text-sm">{addon.subtitle}</p>
+        </div>
+        <p className="text-purplish-blue">
+          +${price}/{recurrence}
+        </p>
+      </div>
+    )
+  })
+
   return (
-    <form className="flex flex-col gap-3" action={submit}>
-      {ADDONS.map((addOn) => {
-        const name = addOn.id.toLowerCase()
-        return (
-          <div
-            className="flex [&:has(input:checked)]:bg-alabaster [&:has(input:checked)]:border-marine-blue transition-colors px-4 py-2 border border-cool-gray rounded-md items-center gap-4"
-            key={name}
-          >
-            <AddOnInput
-              type="checkbox"
-              className="accent-purplish-blue focus:outline-marine-blue border rounded-md border-light-gray outline-none text-accent-purplish-blue w-5 h-5 focus:accent-purplish-blue focus:ring-2 ring-accent-purplish-blue "
-              name={name}
-              id={name}
-            />
-            <label className="flex justify-between   w-full items-center" htmlFor={name}>
-              <div className="flex gap-4  items-center">
-                <div className="flex flex-col">
-                  <h2 className=" text-marine-blue font-bold tracking-tight">
-                    {addOn.title}
-                  </h2>
-                  <p className="text-xs text-cool-gray">{addOn.subtitle}</p>
-                </div>
-              </div>
-              <span className="text-purplish-blue">${addOn.price}/mo</span>
-            </label>
-          </div>
-        )
+    <Form
+      onSubmit={form.onSubmit((values) => {
+        const activeAddons = values.addons.filter((addon: Addon) => addon.active)
+
+        const planCopy = { ...plan }
+        planCopy.addons = activeAddons
+
+        submit({ plan: { ...planCopy } })
       })}
+    >
+      <div className="flex flex-col gap-4">
+        {fields.length > 0 ? (
+          fields
+        ) : (
+          <p className="text-bold text-strawberry-red text-lg self-center mt-10">
+            This plan doesn&apos;t have addons
+          </p>
+        )}
+      </div>
       <FormButtons />
-    </form>
+    </Form>
   )
 }

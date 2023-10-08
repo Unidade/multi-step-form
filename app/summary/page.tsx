@@ -1,33 +1,34 @@
-import { Data } from "@/lib/initialData"
-import { cookies } from "next/headers"
 import Link from "next/link"
 import { FormButtons } from "../../components/forms/FormButtons"
 import { confirm } from "@/lib/confirm"
-import { PageTitle } from "@/components/typography/PageTitle"
+import { PageTitle } from "@/components/PageTitle"
+import { getData } from "@/lib/getData"
 
-export default function Home() {
+export default function SummaryPage() {
   const data = getData()
 
-  let recurrence: "mo" | "yr"
-  let planPrice = Number(data.plan.price)
-
-  if (data.plan.recurrence === "yearly") {
-    recurrence = "yr"
-    planPrice *= 10
-  } else {
-    recurrence = "mo"
-  }
+  const recurrence = data.plan.recurrence === "monthly" ? "mo" : "yr"
 
   const totalPrice = data.plan.addons.reduce((acc, addon) => {
-    const addonPrice =
-      recurrence === "mo" ? Number(addon.price) : Number(addon.price) * 10
+    const addonPrice = recurrence === "mo" ? addon.price : addon.price * 10
     return acc + addonPrice
-  }, planPrice)
+  }, data.plan.price)
 
-  console.log(totalPrice)
+  const addOns = data.plan.addons.map((addon) => {
+    const addonPrice = recurrence === "mo" ? addon.price : addon.price * 10
+
+    return (
+      <li key={addon.id} className="flex items-center justify-between">
+        <h3 className="capitalize leading-3 text-cool-gray font-bold">{addon.title}</h3>
+        <div className="text-marine-blue ">
+          +${addonPrice}/{recurrence}
+        </div>
+      </li>
+    )
+  })
 
   return (
-    <div className="w-full">
+    <>
       <PageTitle className="capitalize text-marine-blue font-bold tracking-tight rounded-lg">
         Finishing up
       </PageTitle>
@@ -50,29 +51,17 @@ export default function Home() {
                 </Link>
               </div>
               <div className="text-marine-blue font-bold">
-                ${planPrice}/{recurrence}
+                ${data.plan.price}/{recurrence}
               </div>
             </div>
             <div className="w-full h-[1px] bg-light-gray mt-3" />
 
             <ul className="flex flex-col gap-2 text-sm mt-3">
-              {data.plan.addons.map((addon) => {
-                const addonPrice =
-                  recurrence === "mo" ? Number(addon.price) : Number(addon.price) * 10
-
-                return (
-                  <li key={addon.id} className="flex items-center justify-between">
-                    <div>
-                      <h3 className="capitalize leading-3 text-cool-gray font-bold">
-                        {addon.title}
-                      </h3>
-                    </div>
-                    <div className="text-marine-blue ">
-                      +${addonPrice}/{recurrence}
-                    </div>
-                  </li>
-                )
-              })}
+              {addOns.length > 0 ? (
+                addOns
+              ) : (
+                <p className="text-cool-gray">No add-ons selected</p>
+              )}
             </ul>
           </div>
           <div className="flex mt-4 justify-between px-4 items-center">
@@ -83,24 +72,9 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <form action={confirm}>
+      <form className="flex-1 flex items-end pb-4" action={confirm}>
         <FormButtons />
       </form>
-    </div>
+    </>
   )
-}
-
-function getData(): Data {
-  const cookieStore = cookies()
-
-  try {
-    const data = cookieStore.get("data")?.value
-    if (!data) throw new Error("No data found")
-
-    const dataJson = JSON.parse(data)
-    return dataJson
-  } catch (e) {
-    console.error(e)
-    throw e
-  }
 }

@@ -2,7 +2,6 @@ import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
 import { STEPS, initialData } from "./lib/initialData"
 
-// This function can be marked `async` if using `await` inside
 export function middleware(request: NextRequest) {
   const furthestVisitedStep = request.cookies.get("furthestVisitedStep")?.value
   const data = request.cookies.get("data")?.value ?? JSON.stringify(initialData)
@@ -10,30 +9,16 @@ export function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname.replace("/", "")
   const isCurrentPathTheFirstStep = pathname === STEPS[0]
 
-  const indexOfTheFurthestAllowedStep = STEPS.indexOf(furthestVisitedStep as any) + 1
+  const indexOfTheFurthestAllowedStep = STEPS.indexOf(furthestVisitedStep as any)
 
   const isCurrentPathAllowed =
     STEPS.includes(pathname as any) &&
     STEPS.indexOf(pathname as any) <= indexOfTheFurthestAllowedStep
 
-  console.log(
-    JSON.stringify(
-      {
-        furthestVisitedStep,
-        data,
-        pathname,
-        isCurrentPathTheFirstStep,
-        indexOfTheFurthestAllowedStep,
-        isCurrentPathAllowed,
-      },
-      null,
-      2
-    )
-  )
-
   // First visit, set the default cookies values
   if (isCurrentPathTheFirstStep && !furthestVisitedStep) {
-    const response = NextResponse.next()
+    // redirect to itself to revalidate the cookies, in the next request will be Next
+    const response = NextResponse.redirect(new URL(`/${STEPS[0]}`, request.url))
     response.cookies.set("data", data)
     response.cookies.set("furthestVisitedStep", STEPS[0])
 
@@ -42,7 +27,7 @@ export function middleware(request: NextRequest) {
 
   // else redirect to the furthest allowed step
   else if (!isCurrentPathAllowed) {
-    return NextResponse.rewrite(
+    return NextResponse.redirect(
       new URL(`/${furthestVisitedStep || STEPS[0]}`, request.url)
     )
   }
@@ -63,3 +48,5 @@ export const config = {
     "/((?!api|_next/static|_next/image|favicon.ico|:path?_rsc=*).*)",
   ],
 }
+
+

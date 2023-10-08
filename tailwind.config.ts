@@ -24,8 +24,14 @@ const config: Config = {
       fontFamily: {
         sans: ["var(--font-ubuntu)"],
       },
+      backgroundImage: {
+        "mobile-sidebar": "url('../public/assets/images/bg-sidebar-mobile.svg')",
+        "desktop-sidebar": "url('../public/assets/images/bg-sidebar-desktop.svg')",
+      },
     },
   },
   plugins: [],
 }
 export default config
+
+

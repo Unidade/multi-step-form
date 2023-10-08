@@ -1,12 +1,11 @@
 "use client"
 import { twMerge } from "tailwind-merge"
 import { usePathname } from "next/navigation"
-import { validStepType, validSteps } from "../shared/StepIndicator"
+import { validStepType, validSteps } from "../StepIndicator"
 import Link from "next/link"
 
 export function FormButtons() {
-  const pathname = usePathname()
-  const currentStep = pathname.replace("/", "") as validStepType
+  const currentStep = usePathname().replace("/", "") as validStepType
 
   const currentStepIndex = validSteps.indexOf(currentStep)
 
@@ -18,7 +17,7 @@ export function FormButtons() {
   return (
     <div
       className={twMerge(
-        "absolute w-full flex justify-between bottom-[-50px] right-0 md:static md:pt-4 ",
+        "absolute w-full flex justify-between bottom-[-50px] md:flex-1 md:items-end right-0 md:static md:pt-4 ",
         !isBackButtonVisible && "justify-end"
       )}
     >
