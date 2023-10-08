@@ -19,6 +19,7 @@ export async function submit(updatedData: Partial<Data>) {
   const currentStepIndex = STEPS.indexOf(currentStep as STEP)
   const furthestVisitedStepIndex = STEPS.indexOf(furthestVisitedStep as STEP)
 
+  const nextStepIndex = currentStepIndex + 1
   const nextStep =
     currentStepIndex === STEPS.length - 1 ? "" : STEPS[currentStepIndex + 1]
 
@@ -33,8 +34,8 @@ export async function submit(updatedData: Partial<Data>) {
     const stringifiedData = JSON.stringify(validatedData)
     cookieStore.set("data", stringifiedData)
 
-    if (currentStep && currentStepIndex > furthestVisitedStepIndex) {
-      cookieStore.set("furthestVisitedStep", currentStep)
+    if (nextStep && nextStepIndex > furthestVisitedStepIndex) {
+      cookieStore.set("furthestVisitedStep", nextStep)
     }
   } catch (error) {
     console.log(error)

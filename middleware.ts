@@ -9,7 +9,7 @@ export function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname.replace("/", "")
   const isCurrentPathTheFirstStep = pathname === STEPS[0]
 
-  const indexOfTheFurthestAllowedStep = STEPS.indexOf(furthestVisitedStep as any) + 1
+  const indexOfTheFurthestAllowedStep = STEPS.indexOf(furthestVisitedStep as any)
 
   const isCurrentPathAllowed =
     STEPS.includes(pathname as any) &&
