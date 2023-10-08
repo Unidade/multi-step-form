@@ -74,7 +74,9 @@ export const initialData: Data = {
   plan: plansData[0],
 }
 
-const phoneRegex = new RegExp(/^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/)
+const phoneRegex = new RegExp(
+  /^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/
+)
 
 export const usersSchema = z.object({
   user: z.object({
@@ -134,5 +136,3 @@ export type PlanName = z.infer<typeof Plan>["name"]
 export type PlanRecurrence = z.infer<typeof Recurrence>["recurrence"]
 export type STEP = (typeof STEPS)[number]
 export type Plan = z.infer<typeof planSchema>["plan"]
-
-

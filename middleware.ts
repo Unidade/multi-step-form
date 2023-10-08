@@ -1,15 +1,17 @@
 import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
-import { STEPS, initialData } from "./lib/initialData"
+import { STEP, STEPS, initialData } from "./lib/initialData"
 
 export function middleware(request: NextRequest) {
   const furthestVisitedStep = request.cookies.get("furthestVisitedStep")?.value
-  const data = request.cookies.get("data")?.value ?? JSON.stringify(initialData)
+  const stringifiedData = JSON.stringify(initialData)
 
   const pathname = request.nextUrl.pathname.replace("/", "")
   const isCurrentPathTheFirstStep = pathname === STEPS[0]
 
-  const indexOfTheFurthestAllowedStep = STEPS.indexOf(furthestVisitedStep as any)
+  const indexOfTheFurthestAllowedStep = STEPS.indexOf(
+    furthestVisitedStep as STEP
+  )
 
   const isCurrentPathAllowed =
     STEPS.includes(pathname as any) &&
@@ -19,7 +21,7 @@ export function middleware(request: NextRequest) {
   if (isCurrentPathTheFirstStep && !furthestVisitedStep) {
     // redirect to itself to revalidate the cookies, in the next request will be Next
     const response = NextResponse.redirect(new URL(`/${STEPS[0]}`, request.url))
-    response.cookies.set("data", data)
+    response.cookies.set("data", stringifiedData)
     response.cookies.set("furthestVisitedStep", STEPS[0])
 
     return response
@@ -48,5 +50,3 @@ export const config = {
     "/((?!api|_next/static|_next/image|favicon.ico|:path?_rsc=*).*)",
   ],
 }
-
-

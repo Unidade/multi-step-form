@@ -19,10 +19,9 @@
 
 @layer components {
   .app {
-    min-height: 100dvh;
+    min-height: 80dvh;
     background-color: var(--alabaster);
     display: flex;
-
     text-align: center;
   }
 
@@ -32,7 +31,6 @@
     background-color: var(--magnolia);
     max-width: 90rem;
     width: 100%;
-    min-height: 100dvh;
     position: relative;
   }
 
@@ -52,7 +50,9 @@
 
     .app {
       padding: 10px;
+      min-height: 100dvh;
       justify-content: center;
+      align-items: center;
       text-align: start;
       background-color: var(--magnolia);
     }

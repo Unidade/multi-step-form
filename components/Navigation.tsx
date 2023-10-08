@@ -7,7 +7,8 @@ export function Navigation() {
   const stepsWithoutConfirmed = STEPS.slice(0, -1)
 
   const cookieStore = cookies()
-  const furthestVisitedStep = cookieStore.get("furthestVisitedStep")?.value ?? STEPS[0]
+  const furthestVisitedStep =
+    cookieStore.get("furthestVisitedStep")?.value ?? STEPS[0]
 
   const furthestVisitedStepIndex = STEPS.indexOf(furthestVisitedStep as STEP)
 
@@ -15,7 +16,7 @@ export function Navigation() {
     <nav
       className={twMerge(
         "min-h-[172px] flex items-center bg-mobile-sidebar bg-no-repeat bg-center bg-cover",
-        "md:bg-desktop-sidebar  md:h-full md:items-start md:p-8 md:rounded-lg"
+        "md:bg-desktop-sidebar  md:min-h-[600px] md:items-start md:p-8 md:rounded-lg"
       )}
     >
       <ul className="flex w-full md:flex-col justify-center md:justify-start gap-10">
