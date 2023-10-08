@@ -21,7 +21,6 @@ export function AddOnForm({ plan }: AddOnFormProps) {
   })
 
   const fields = form.values.addons.map((addon, index) => {
-    console.log(addon)
     const recurrence = plan.recurrence === "yearly" ? "yr" : "mo"
     const price = plan.recurrence === "yearly" ? addon.price * 10 : addon.price
 
@@ -50,11 +49,9 @@ export function AddOnForm({ plan }: AddOnFormProps) {
     <Form
       onSubmit={form.onSubmit((values) => {
         const activeAddons = values.addons.filter((addon: Addon) => addon.active)
-        console.log(activeAddons)
+
         const planCopy = { ...plan }
         planCopy.addons = activeAddons
-
-        console.log(planCopy)
 
         submit({ plan: { ...planCopy } })
       })}

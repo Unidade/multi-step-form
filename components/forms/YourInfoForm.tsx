@@ -24,9 +24,6 @@ export function YourInfoForm({ initialValues }: YourInfoFormProps) {
     validate: zodResolver(usersSchema),
   })
 
-  console.log(form.errors)
-  console.log(form.values)
-
   return (
     <Form
       onSubmit={form.onSubmit((values) => {

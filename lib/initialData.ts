@@ -134,3 +134,5 @@ export type PlanName = z.infer<typeof Plan>["name"]
 export type PlanRecurrence = z.infer<typeof Recurrence>["recurrence"]
 export type STEP = (typeof STEPS)[number]
 export type Plan = z.infer<typeof planSchema>["plan"]
+
+
