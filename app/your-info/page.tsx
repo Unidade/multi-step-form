@@ -4,7 +4,7 @@ import { YourInfoForm } from "@/components/forms/YourInfoForm"
 import { getData } from "@/lib/getData"
 
 export default function Home() {
-  const data = getData()
+  const { user } = getData()
 
   return (
     <>
@@ -15,7 +15,7 @@ export default function Home() {
         Please fill in the information below and your goal for digital saving.
       </p>
 
-      <YourInfoForm initialValues={data} />
+      <YourInfoForm initialValues={user} />
     </>
   )
 }

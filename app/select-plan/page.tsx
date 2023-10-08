@@ -3,7 +3,7 @@ import { SelectPlanForm } from "@/components/forms/SelectPlanForm"
 import { getData } from "@/lib/getData"
 
 export default function Home() {
-  const data = getData()
+  const { plan } = getData()
 
   return (
     <>
@@ -12,7 +12,7 @@ export default function Home() {
         You have the option of monthly or yearly billing
       </p>
 
-      <SelectPlanForm initialSelectedPlan={data.plan} />
+      <SelectPlanForm initialSelectedPlan={plan} />
     </>
   )
 }

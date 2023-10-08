@@ -4,8 +4,19 @@ import { getData } from "@/lib/getData"
 import { Plan, plansData } from "@/lib/initialData"
 
 export default function Home() {
-  const data = getData()
-  data.plan.addons = getPlanAddons(data.plan)
+  const { plan } = getData()
+
+  const existingAddonIds = new Set(plan.addons.map((addon) => addon.id))
+
+  // Filter default addons that are not in the plan
+  const missingDefaultAddons = getDefaultPlanAddons(plan).filter(
+    (defaultAddon) => !existingAddonIds.has(defaultAddon.id)
+  )
+
+  const updatedPlan = {
+    ...plan,
+    addons: [...plan.addons, ...missingDefaultAddons],
+  }
 
   return (
     <>
@@ -16,11 +27,11 @@ export default function Home() {
         Add-ons help enhance your gaming experience.
       </p>
 
-      <AddOnForm plan={data.plan} />
+      <AddOnForm plan={updatedPlan} />
     </>
   )
 }
 
-function getPlanAddons(plan: Plan) {
+function getDefaultPlanAddons(plan: Plan) {
   return plansData.find((p) => p.id === plan.id)?.addons ?? []
 }

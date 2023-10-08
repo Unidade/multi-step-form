@@ -13,12 +13,14 @@ import { ErrorMessage } from "./ErrorMessage"
 import { submit } from "@/lib/submit"
 
 interface YourInfoFormProps {
-  initialValues: z.infer<typeof usersSchema>
+  initialValues: z.infer<typeof usersSchema>["user"]
 }
 
 export function YourInfoForm({ initialValues }: YourInfoFormProps) {
   const form = useForm({
-    initialValues,
+    initialValues: {
+      user: initialValues,
+    },
     validate: zodResolver(usersSchema),
   })
 
