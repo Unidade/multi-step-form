@@ -4,6 +4,7 @@ import { getCookie } from "./getCookite"
 export function getData(): Data {
   try {
     const data = getCookie("data")?.value
+    console.log(data)
     if (!data) throw new Error("No data found")
 
     const dataJson = JSON.parse(data)
