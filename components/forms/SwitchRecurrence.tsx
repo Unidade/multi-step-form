@@ -1,4 +1,5 @@
 "use client"
+import { PlanRecurrence } from "@/lib/initialData"
 import { motion } from "framer-motion"
 
 export interface SwitchRecurrenceProps {

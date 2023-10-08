@@ -4,29 +4,33 @@ import { confirm } from "@/lib/confirm"
 import { PageTitle } from "@/components/PageTitle"
 import { getData } from "@/lib/getData"
 
-export default function Home() {
+export default function SummaryPage() {
   const data = getData()
 
-  let recurrence: "mo" | "yr"
-  let planPrice = Number(data.plan.price)
+  const recurrence = data.plan.recurrence === "monthly" ? "mo" : "yr"
 
-  if (data.plan.recurrence === "yearly") {
-    recurrence = "yr"
-    planPrice *= 10
-  } else {
-    recurrence = "mo"
-  }
-
-  const selectedAddons = data.plan.addons.filter((addon) => addon.checked)
-
-  const totalPrice = selectedAddons.reduce((acc, addon) => {
-    const addonPrice =
-      recurrence === "mo" ? Number(addon.price) : Number(addon.price) * 10
+  const totalPrice = data.plan.addons.reduce((acc, addon) => {
+    const addonPrice = recurrence === "mo" ? addon.price : addon.price * 10
     return acc + addonPrice
-  }, planPrice)
+  }, data.plan.price)
+
+  const addOns = data.plan.addons.map((addon) => {
+    const addonPrice = recurrence === "mo" ? addon.price : addon.price * 10
+
+    return (
+      <li key={addon.id} className="flex items-center justify-between">
+        <div>
+          <h3 className="capitalize leading-3 text-cool-gray font-bold">{addon.title}</h3>
+        </div>
+        <div className="text-marine-blue ">
+          +${addonPrice}/{recurrence}
+        </div>
+      </li>
+    )
+  })
 
   return (
-    <div className="flex flex-col flex-1 justify-end">
+    <>
       <PageTitle className="capitalize text-marine-blue font-bold tracking-tight rounded-lg">
         Finishing up
       </PageTitle>
@@ -49,29 +53,17 @@ export default function Home() {
                 </Link>
               </div>
               <div className="text-marine-blue font-bold">
-                ${planPrice}/{recurrence}
+                ${data.plan.price}/{recurrence}
               </div>
             </div>
             <div className="w-full h-[1px] bg-light-gray mt-3" />
 
             <ul className="flex flex-col gap-2 text-sm mt-3">
-              {selectedAddons.map((addon) => {
-                const addonPrice =
-                  recurrence === "mo" ? Number(addon.price) : Number(addon.price) * 10
-
-                return (
-                  <li key={addon.id} className="flex items-center justify-between">
-                    <div>
-                      <h3 className="capitalize leading-3 text-cool-gray font-bold">
-                        {addon.title}
-                      </h3>
-                    </div>
-                    <div className="text-marine-blue ">
-                      +${addonPrice}/{recurrence}
-                    </div>
-                  </li>
-                )
-              })}
+              {addOns.length > 0 ? (
+                addOns
+              ) : (
+                <p className="text-cool-gray">No add-ons selected</p>
+              )}
             </ul>
           </div>
           <div className="flex mt-4 justify-between px-4 items-center">
@@ -85,6 +77,6 @@ export default function Home() {
       <form className="flex-1 flex items-end pb-4" action={confirm}>
         <FormButtons />
       </form>
-    </div>
+    </>
   )
 }

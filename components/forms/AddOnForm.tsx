@@ -1,70 +1,74 @@
 "use client"
 
-import { Addon, ADDONS as DefaultAddons } from "@/lib/initialData"
+import { Addon, ADDONS as DefaultAddons, Plan } from "@/lib/initialData"
 import { FormButtons } from "./FormButtons"
 
 import { submit } from "@/lib/submit"
-import { AddOnInput } from "./AddOnInput"
-import { useState } from "react"
+
+import { useForm } from "@mantine/form"
+
+import { Form } from "./Form"
 
 interface AddOnFormProps {
-  savedAddonsValues?: Addon[]
+  plan: Plan
 }
 
-export function AddOnForm({ savedAddonsValues }: AddOnFormProps) {
-  const [addons, setAddons] = useState<Addon[]>(savedAddonsValues || DefaultAddons)
+export function AddOnForm({ plan }: AddOnFormProps) {
+  const form = useForm({
+    initialValues: {
+      addons: plan.addons,
+    },
+  })
 
-  console.log(addons)
+  const fields = form.values.addons.map((addon, index) => {
+    console.log(addon)
+    const recurrence = plan.recurrence === "yearly" ? "yr" : "mo"
+    const price = plan.recurrence === "yearly" ? addon.price * 10 : addon.price
 
-  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let inputName = e.currentTarget.name.slice(6) // remove addon- prefix
-    let inputValue = e.currentTarget.checked
-
-    console.log(inputName, inputValue)
-    console.log(JSON.stringify(addons, null, 2))
-
-    setAddons((prev) => {
-      return prev.map((addon) => {
-        if (addon.id === inputName) {
-          return { ...addon, checked: inputValue }
-        }
-        return addon
-      })
-    })
-  }
+    return (
+      <div
+        className="flex gap-4 p-4 outline outline-1 rounded-md items-center"
+        key={addon.id}
+      >
+        <input
+          type="checkbox"
+          className="w-5 h-5 accent-purplish-blue"
+          {...form.getInputProps(`addons.${index}.active`, { type: "checkbox" })}
+        />
+        <div className="flex-1">
+          <h3 className="font-bold text-lg text-marine-blue leading-7">{addon.title}</h3>
+          <p className="text-cool-gray text-sm">{addon.subtitle}</p>
+        </div>
+        <p className="text-purplish-blue">
+          +${price}/{recurrence}
+        </p>
+      </div>
+    )
+  })
 
   return (
-    <form className="flex flex-col gap-4" action={submit}>
-      {addons.map((addOn) => {
-        const name = addOn.id.toLowerCase()
-        return (
-          <div
-            className="flex [&:has(input:checked)]:bg-alabaster [&:has(input:checked)]:border-marine-blue transition-colors px-4 py-3 border border-cool-gray rounded-md items-center gap-4"
-            key={name}
-          >
-            <AddOnInput
-              type="checkbox"
-              className="accent-purplish-blue focus:outline-marine-blue border rounded-md border-light-gray outline-none text-accent-purplish-blue w-5 h-5 focus:accent-purplish-blue focus:ring-2 ring-accent-purplish-blue "
-              name={name}
-              id={name}
-              checked={addOn.checked}
-              onChange={handleOnChange}
-            />
-            <label className="flex justify-between   w-full items-center" htmlFor={name}>
-              <div className="flex gap-4  items-center">
-                <div className="flex flex-col">
-                  <h2 className=" text-marine-blue text-lg font-bold tracking-tight leading-7">
-                    {addOn.title}
-                  </h2>
-                  <p className="text-sm text-cool-gray">{addOn.subtitle}</p>
-                </div>
-              </div>
-              <span className="text-purplish-blue">${addOn.price}/mo</span>
-            </label>
-          </div>
-        )
+    <Form
+      onSubmit={form.onSubmit((values) => {
+        const activeAddons = values.addons.filter((addon: Addon) => addon.active)
+        console.log(activeAddons)
+        const planCopy = { ...plan }
+        planCopy.addons = activeAddons
+
+        console.log(planCopy)
+
+        submit({ plan: { ...planCopy } })
       })}
+    >
+      <div className="flex flex-col gap-4">
+        {fields.length > 0 ? (
+          fields
+        ) : (
+          <p className="text-bold text-strawberry-red text-lg self-center mt-10">
+            This plan doesn&apos;t have addons
+          </p>
+        )}
+      </div>
       <FormButtons />
-    </form>
+    </Form>
   )
 }

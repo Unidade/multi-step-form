@@ -1,5 +1,5 @@
 import { PageTitle } from "@/components/PageTitle"
-import { SelectPlanForm } from "@/components/forms/SelectPlanForm copy"
+import { SelectPlanForm } from "@/components/forms/SelectPlanForm"
 import { getData } from "@/lib/getData"
 
 export default function Home() {

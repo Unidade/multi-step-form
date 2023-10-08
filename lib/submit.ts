@@ -25,6 +25,7 @@ export async function submit(updatedData: Partial<Data>) {
   try {
     const parsedData = currentData ? JSON.parse(currentData) : initialData
     const copiedData = { ...parsedData, ...updatedData }
+    console.log(parsedData)
 
     const validatedData = formSchema.parse(copiedData)
     console.log(validatedData)

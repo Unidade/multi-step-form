@@ -13,24 +13,25 @@ export const STEPS = [
 export const ADDONS = [
   {
     title: "Online service",
-    price: "1",
+    price: 1,
     subtitle: "Access to multiplayer games",
     id: "online-service",
-    checked: false,
+    active: false,
   },
   {
     title: "Larger storage",
-    price: "2",
+    price: 2,
+
     subtitle: "Extra 1TB of cloud save",
     id: "larger-storage",
-    checked: false,
+    active: false,
   },
   {
     title: "Customizable profile",
-    price: "3",
+    price: 2,
     subtitle: "Custom theme on your profile",
     id: "customizable-profile",
-    checked: false,
+    active: false,
   },
 ]
 
@@ -40,7 +41,7 @@ export const plansData: Plan[] = [
     name: "arcade",
     recurrence: "monthly",
     get price() {
-      return this.recurrence === "monthly" ? "4" : "9"
+      return this.recurrence === "monthly" ? 4 : 9
     },
     addons: ADDONS,
   },
@@ -49,7 +50,7 @@ export const plansData: Plan[] = [
     name: "advanced",
     recurrence: "monthly",
     get price() {
-      return this.recurrence === "monthly" ? "19" : "199"
+      return this.recurrence === "monthly" ? 19 : 199
     },
     addons: ADDONS,
   },
@@ -58,7 +59,7 @@ export const plansData: Plan[] = [
     name: "pro",
     recurrence: "monthly",
     get price() {
-      return this.recurrence === "monthly" ? "49" : "499"
+      return this.recurrence === "monthly" ? 49 : 499
     },
     addons: ADDONS,
   },
@@ -101,10 +102,10 @@ export const usersSchema = z.object({
 export const addonsSchema = z.array(
   z.object({
     id: z.string(),
-    price: z.string(),
+    price: z.number().nonnegative(),
     title: z.string(),
     subtitle: z.string(),
-    checked: z.boolean().default(false),
+    active: z.boolean().default(false),
   })
 )
 
@@ -113,7 +114,7 @@ export const planSchema = z.object({
     id: z.string(),
     name: z.enum(PLANS),
     recurrence: z.enum(RECURRENCE),
-    price: z.string(),
+    price: z.number().nonnegative(),
     addons: addonsSchema,
   }),
 })

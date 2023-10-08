@@ -1,4 +1,4 @@
-function getPlanIcon(id: string): (() => React.JSX.Element) | null {
+export function getPlanIcon(id: string): (() => React.JSX.Element) | null {
   switch (id) {
     case "arcade":
       return ArcadeIcon
