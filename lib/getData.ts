@@ -1,11 +1,9 @@
-import { Data } from "./initialData"
+import { Data, initialData } from "./initialData"
 import { getCookie } from "./getCookite"
 
 export function getData(): Data {
   try {
-    const data = getCookie("data")?.value
-    console.log(data)
-    if (!data) throw new Error("No data found")
+    const data = getCookie("data")?.value || JSON.stringify(initialData)
 
     const dataJson = JSON.parse(data)
     return dataJson
