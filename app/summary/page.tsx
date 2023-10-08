@@ -19,9 +19,7 @@ export default function SummaryPage() {
 
     return (
       <li key={addon.id} className="flex items-center justify-between">
-        <div>
-          <h3 className="capitalize leading-3 text-cool-gray font-bold">{addon.title}</h3>
-        </div>
+        <h3 className="capitalize leading-3 text-cool-gray font-bold">{addon.title}</h3>
         <div className="text-marine-blue ">
           +${addonPrice}/{recurrence}
         </div>

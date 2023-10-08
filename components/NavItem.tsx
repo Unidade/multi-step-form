@@ -4,7 +4,6 @@ import { STEPS } from "@/lib/initialData"
 import clsx from "clsx"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { twMerge } from "tailwind-merge"
 
 interface NavItemProps {
   href: string
@@ -15,8 +14,8 @@ export function NavItem({ href, title }: NavItemProps) {
   const pathname = usePathname().replace("/", "")
   const _href = href.replace("/", "")
 
-  const isActive = pathname === _href
   const stepNumber = STEPS.findIndex((step) => step === _href) + 1
+  const isActive = pathname === _href || (stepNumber === 4 && pathname === "confirmed")
 
   console.log({
     stepNumber,

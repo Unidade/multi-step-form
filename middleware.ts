@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
 import { STEPS, initialData } from "./lib/initialData"
+import { url } from "inspector"
 
-// This function can be marked `async` if using `await` inside
 export function middleware(request: NextRequest) {
   const furthestVisitedStep = request.cookies.get("furthestVisitedStep")?.value
   const data = request.cookies.get("data")?.value ?? JSON.stringify(initialData)
@@ -18,7 +18,8 @@ export function middleware(request: NextRequest) {
 
   // First visit, set the default cookies values
   if (isCurrentPathTheFirstStep && !furthestVisitedStep) {
-    const response = NextResponse.next()
+    // redirect to itself to revalidate the cookies, in the next request will be Next
+    const response = NextResponse.redirect(new URL(`/${STEPS[0]}`, request.url))
     response.cookies.set("data", data)
     response.cookies.set("furthestVisitedStep", STEPS[0])
 
@@ -27,7 +28,7 @@ export function middleware(request: NextRequest) {
 
   // else redirect to the furthest allowed step
   else if (!isCurrentPathAllowed) {
-    return NextResponse.rewrite(
+    return NextResponse.redirect(
       new URL(`/${furthestVisitedStep || STEPS[0]}`, request.url)
     )
   }
