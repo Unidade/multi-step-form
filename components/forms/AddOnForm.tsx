@@ -1,6 +1,6 @@
 "use client"
 
-import { Addon, ADDONS as DefaultAddons, Plan } from "@/lib/initialData"
+import { Addon, Plan } from "@/lib/initialData"
 import { FormButtons } from "./FormButtons"
 
 import { submit } from "@/lib/submit"

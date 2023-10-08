@@ -2,7 +2,7 @@
 
 import { usersSchema } from "@/lib/initialData"
 import { useForm, zodResolver } from "@mantine/form"
-import { UserInput } from "./Input"
+import { UserInput } from "./UserInput"
 import { FormButtons } from "./FormButtons"
 import { Form } from "./Form"
 import { Label } from "./Label"

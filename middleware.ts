@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
 import { STEPS, initialData } from "./lib/initialData"
-import { url } from "inspector"
 
 export function middleware(request: NextRequest) {
   const furthestVisitedStep = request.cookies.get("furthestVisitedStep")?.value

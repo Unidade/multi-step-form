@@ -1,6 +1,6 @@
 "use client"
 
-import { Plan, PlanName, PlanRecurrence, planSchema, plansData } from "@/lib/initialData"
+import { Plan, PlanName, PlanRecurrence, plansData } from "@/lib/initialData"
 
 import { FormButtons } from "./FormButtons"
 import { Form } from "./Form"

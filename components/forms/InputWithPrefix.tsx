@@ -9,7 +9,7 @@ type InputProps = DetailedHTMLProps<
 }
 
 // Input component with prefix, create a id from name as default
-export function Input(props: InputProps) {
+export function InputWithPrefix(props: InputProps) {
   return (
     <input
       id={props.name}
