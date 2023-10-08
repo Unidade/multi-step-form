@@ -1,13 +1,13 @@
 import { PageTitle } from "@/components/PageTitle"
+import { YourInfoForm } from "@/components/forms/YourInfoForm"
 
-import { YourInfoForm } from "@/components/forms/Form"
 import { getData } from "@/lib/getData"
 
 export default function Home() {
   const data = getData()
 
   return (
-    <div className="flex-1">
+    <>
       <PageTitle className="capitalize text-marine-blue font-bold tracking-tight rounded-lg">
         personal info
       </PageTitle>
@@ -15,7 +15,7 @@ export default function Home() {
         Please fill in the information below and your goal for digital saving.
       </p>
 
-      <YourInfoForm initialValues={data.user} />
-    </div>
+      <YourInfoForm initialValues={data} />
+    </>
   )
 }
