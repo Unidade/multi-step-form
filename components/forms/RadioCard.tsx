@@ -9,7 +9,11 @@ interface RadioCardProps {
   setSelectPlan: (plan: PlanName) => void
 }
 
-export function RadioCard({ data, selectedPlan, setSelectPlan }: RadioCardProps) {
+export function RadioCard({
+  data,
+  selectedPlan,
+  setSelectPlan,
+}: RadioCardProps) {
   const recurrenceFormatted = data.recurrence === "yearly" ? "yr" : "mo"
   const checked = selectedPlan === data.name
 
@@ -19,7 +23,9 @@ export function RadioCard({ data, selectedPlan, setSelectPlan }: RadioCardProps)
     <>
       <input
         checked={checked}
-        onChange={(event) => setSelectPlan(event.currentTarget.value as PlanName)}
+        onChange={(event) =>
+          setSelectPlan(event.currentTarget.value as PlanName)
+        }
         name="selectedPlan"
         type="radio"
         value={data.id}
@@ -41,7 +47,9 @@ export function RadioCard({ data, selectedPlan, setSelectPlan }: RadioCardProps)
               ${data.price}/{recurrenceFormatted}
             </p>
             {data.recurrence === "yearly" && (
-              <span className="text-marine-blue font-medium">2 months free</span>
+              <p className=" inline-block text-marine-blue font-medium">
+                2 months free
+              </p>
             )}
           </div>
         </div>

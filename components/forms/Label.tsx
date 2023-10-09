@@ -9,7 +9,10 @@ interface LabelProps {
 export function Label({ htmlFor, children, className }: LabelProps) {
   return (
     <label
-      className={twMerge("mt-4 flex justify-between text-marine-blue", className)}
+      className={twMerge(
+        "mt-4 flex leading-7 justify-between text-marine-blue",
+        className
+      )}
       htmlFor={htmlFor}
     >
       {children}

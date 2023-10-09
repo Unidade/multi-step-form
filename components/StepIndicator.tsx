@@ -4,7 +4,12 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { twMerge } from "tailwind-merge"
 
-export const validSteps = ["your-info", "select-plan", "add-ons", "summary"] as const
+export const validSteps = [
+  "your-info",
+  "select-plan",
+  "add-ons",
+  "summary",
+] as const
 export type validStepType = (typeof validSteps)[number]
 
 export function StepIndicator({ className }: { className?: string }) {
@@ -31,8 +36,10 @@ export function StepIndicator({ className }: { className?: string }) {
               {stepNumber}
             </Link>
             <div className="hidden text-xs md:flex md:flex-col">
-              <span className="text-light-gray">STEP: {stepNumber}</span>
-              <span className="uppercase md:text-white">{path.replace("-", " ")}</span>
+              <p className="inline-block text-light-gray">STEP: {stepNumber}</p>
+              <p className="inline-block uppercase md:text-white">
+                {path.replace("-", " ")}
+              </p>
             </div>
           </li>
         )
